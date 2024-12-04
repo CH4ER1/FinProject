@@ -120,7 +120,7 @@ public class RoomKioskMain extends JFrame {
                         SwingUtilities.getWindowAncestor(panel).setVisible(false); // 현재 창 숨기기
                         break;
                     case "알람 기능":
-                    	new RoomKioskAlarmMain().setVisible(true);
+                    	new RoomKioskAlarmList().setVisible(true);
                         SwingUtilities.getWindowAncestor(panel).setVisible(false); // 현재 창 숨기기
                         break;
                     case "조식권 구매":

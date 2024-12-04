@@ -157,8 +157,8 @@ public class RoomKioskMealFin extends JFrame {
     }
     
     class SouthPanel extends JPanel {
-    	private int remainingTime = 10;
-    	
+        private int remainingTime = 10; // 초기 카운트다운 시간
+
         public SouthPanel() {
             setBackground(new Color(255, 201, 169));
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // 수직 정렬
@@ -176,20 +176,20 @@ public class RoomKioskMealFin extends JFrame {
 
             add(Box.createVerticalGlue());
 
-            Timer timer = new Timer(1000, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (remainingTime > 0) {
-                        infoLabel.setText(remainingTime + "초 뒤 메인 화면으로 돌아갑니다.");
-                        remainingTime--;
-                    } else {
-                        ((Timer) e.getSource()).stop(); 
-                        new RoomKioskMain();
-                        dispose(); // 현재 창 닫기
-                    }
-                }
-            });
-            timer.start();
+	        Timer timer = new Timer(1000, new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                if (remainingTime > 0) {
+	                    remainingTime--;
+	                    infoLabel.setText(remainingTime + "초 뒤 메인 화면으로 돌아갑니다.");
+	                } else {
+	                    ((Timer) e.getSource()).stop();
+	                    new RoomKioskMain();
+	                    ((JFrame) SwingUtilities.getWindowAncestor(SouthPanel.this)).dispose();
+	                    
+	                }
+	            }
+	        });
+	        timer.start();
         }
     }
     

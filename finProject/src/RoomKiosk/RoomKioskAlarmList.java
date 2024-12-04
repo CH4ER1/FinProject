@@ -1,4 +1,5 @@
 package RoomKiosk;
+
 import javax.swing.*;
 
 import javax.swing.border.CompoundBorder;
@@ -7,7 +8,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+//알람 목록
 public class RoomKioskAlarmList extends JFrame {
     public RoomKioskAlarmList() {
         super("Hotel Kiosk");
@@ -201,6 +202,15 @@ public class RoomKioskAlarmList extends JFrame {
             add(paymentButton);
             add(new JLabel("       "));
             setPreferredSize(new Dimension(0, 100));
+            
+          //RoomKioskAlarmSetting 화면으로 이동
+            paymentButton.addActionListener(new ActionListener() {
+              @Override
+              public void actionPerformed(ActionEvent e) {
+                 new RoomKioskAlarmSetting().setVisible(true);;
+                 dispose();
+              }
+           });
         }
     }
     

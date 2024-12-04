@@ -171,20 +171,20 @@ public class RoomKioskFoodFin extends JFrame {
 
            add(Box.createVerticalGlue());
 
-           Timer timer = new Timer(1000, new ActionListener() {
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   if (remainingTime > 0) {
-                       infoLabel.setText(remainingTime + "초 뒤 메인 화면으로 돌아갑니다.");
-                       remainingTime--;
-                   } else {
-                       ((Timer) e.getSource()).stop(); 
-                       new RoomKioskMain();
-                       dispose(); // 현재 창 닫기
-                   }
-               }
-           });
-           timer.start();
+	        Timer timer = new Timer(1000, new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                if (remainingTime > 0) {
+	                    remainingTime--;
+	                    infoLabel.setText(remainingTime + "초 뒤 메인 화면으로 돌아갑니다.");
+	                } else {
+	                    ((Timer) e.getSource()).stop();
+	                    new RoomKioskMain();
+	                    ((JFrame) SwingUtilities.getWindowAncestor(SPanel.this)).dispose();
+	                    
+	                }
+	            }
+	        });
+	        timer.start();
        }
    }
 }
