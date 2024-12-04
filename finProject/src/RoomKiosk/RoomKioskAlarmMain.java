@@ -6,7 +6,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+ 
 public class RoomKioskAlarmMain extends JFrame {
     public RoomKioskAlarmMain() {
         super("Hotel Kiosk");

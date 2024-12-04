@@ -42,7 +42,7 @@ public class RoomKioskFood extends JFrame {
         public NPanel() {
             setBackground(new Color(255, 201, 169)); // 배경색 설정
             setLayout(new GridBagLayout()); // GridBag 레이아웃 사용
-            
+             
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.weightx = 1.0;            

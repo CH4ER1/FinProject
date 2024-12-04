@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
+ 
 public class RoomKioskTempLight extends JFrame {
    private Integer roomNumber = 801;
    private static Integer nowTemp; 

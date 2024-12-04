@@ -110,7 +110,7 @@ public class RoomKioskMealFin extends JFrame {
             finOrderPanel.setLayout(new BoxLayout(finOrderPanel, BoxLayout.Y_AXIS));  // 수평 배치
             finOrderPanel.setPreferredSize(new Dimension(170, 220));
             finOrderPanel.setAlignmentY(Component.CENTER_ALIGNMENT);
-            
+             
             // '방 번호'
             RoundedButtonTen roomNumButton = new RoundedButtonTen("방 번호");
             roomNumButton.setPreferredSize(new Dimension(200, 25)); // 버튼 크기 조정

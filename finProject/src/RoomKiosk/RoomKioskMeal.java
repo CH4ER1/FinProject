@@ -16,7 +16,7 @@ public class RoomKioskMeal extends JFrame {
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
         contentPane.setLayout(new BorderLayout());
         contentPane.add(new NorthPanel(), BorderLayout.NORTH);
-
+ 
  
         CenterPanel centerPanel = new CenterPanel(); // CenterPanel 인스턴스 생성
         SouthPanel southPanel = new SouthPanel(centerPanel); // CenterPanel을 SouthPanel에 전달
