@@ -8,7 +8,7 @@ public class DatabaseConnection {
     // 데이터베이스 연결 정보
     private static final String URL = "jdbc:mysql://localhost:3306/Hotel";
     private static final String USER = "root"; 
-    private static final String PASSWORD = "1122";  
+    private static final String PASSWORD = "password";  
 
     public static boolean checkReservation(String name, String reservationNumber) {
         String query = "SELECT * FROM SelfCheckinInfo WHERE name = ? AND reservation_num = ?";
