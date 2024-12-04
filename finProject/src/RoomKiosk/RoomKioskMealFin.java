@@ -118,7 +118,7 @@ public class RoomKioskMealFin extends JFrame {
             roomNumButton.setBackground(new Color(229,158,138)); // 버튼 배경색
             roomNumButton.setForeground(Color.WHITE);
             roomNumButton.setAlignmentX(Component.CENTER_ALIGNMENT); // 중앙 정렬
-            gbc.gridy = 0;
+            gbc.gridy = 0; 
             finOrderPanel.add(roomNumButton);
             finOrderPanel.add(Box.createRigidArea(new Dimension(0, 20)));
              

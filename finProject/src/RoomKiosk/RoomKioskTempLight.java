@@ -14,7 +14,7 @@ public class RoomKioskTempLight extends JFrame {
    private Integer roomNumber = 801;
    private static Integer nowTemp; 
    private static Boolean nowLight1, nowLight2, nowLight3;
-   private TempLightDatabase dbTempLight;
+   private TempLightDatabase dbTempLight; 
     public RoomKioskTempLight() {
         super("Hotel Kiosk");       
         try {

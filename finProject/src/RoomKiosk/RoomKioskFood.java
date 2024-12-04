@@ -36,7 +36,7 @@ public class RoomKioskFood extends JFrame {
     public static void main(String[] args) {
         new RoomKioskFood(); // RoomKioskFood 객체 생성
     }
-
+ 
     // 상단 패널: 로고 및 텍스트를 표시
     class NPanel extends JPanel {
         public NPanel() {
