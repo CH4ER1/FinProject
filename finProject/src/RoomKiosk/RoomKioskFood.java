@@ -62,7 +62,7 @@ public class RoomKioskFood extends JFrame {
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(255, 201, 169));
             JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/room_logo.png");
+            ImageIcon icon = new ImageIcon("images/BlackLogo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
             logoPanel.setPreferredSize(new Dimension(700,110));
