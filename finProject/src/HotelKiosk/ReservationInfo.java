@@ -120,7 +120,9 @@ public class ReservationInfo extends JFrame {
             RoundedTextField checkInField = new RoundedTextField("   체크인 날짜를 입력해 주세요.", 25, 25);
             checkInField.setBackground(Color.WHITE);
             checkInField.setForeground(Color.GRAY);
-            checkInField.setPreferredSize(new Dimension(300, 50)); // 크기 조정
+            checkInField.setPreferredSize(new Dimension(300, 25));
+            checkInField.setMinimumSize(new Dimension(300, 25));
+            checkInField.setSize(new Dimension(300, 25));
             gbc.gridx = 1;
             add(checkInField, gbc);
 
@@ -134,7 +136,9 @@ public class ReservationInfo extends JFrame {
             RoundedTextField checkOutField = new RoundedTextField("   체크아웃 날짜를 입력해 주세요.", 25, 25);
             checkOutField.setBackground(Color.WHITE);
             checkOutField.setForeground(Color.GRAY);
-            checkOutField.setPreferredSize(new Dimension(300, 50)); // 크기 조정
+            checkOutField.setPreferredSize(new Dimension(300, 25));
+            checkOutField.setMinimumSize(new Dimension(300, 25));
+            checkOutField.setSize(new Dimension(300, 25));
             gbc.gridx = 1;
             add(checkOutField, gbc);
             

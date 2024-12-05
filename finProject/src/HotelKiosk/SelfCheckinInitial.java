@@ -134,7 +134,7 @@ public class SelfCheckinInitial extends JFrame {
             gbc.gridwidth = 2;
             innerPanel.add(nameLabel, gbc);
 
-            RoundedTextField nameField = new RoundedTextField(" 예약하신 분의 성함을 입력해 주세요.", 25, 25);
+            RoundedTextField nameField = new RoundedTextField("   예약하신 분의 성함을 입력해 주세요.", 25, 25);
             nameField.setBackground(Color.WHITE);
             nameField.setForeground(Color.GRAY);
             nameField.setPreferredSize(new Dimension(300, 40));
@@ -147,7 +147,7 @@ public class SelfCheckinInitial extends JFrame {
             gbc.gridy = 2;
             innerPanel.add(numLabel, gbc);
 
-            RoundedTextField numField = new RoundedTextField(" 예약번호를 입력해 주세요.", 25, 25);
+            RoundedTextField numField = new RoundedTextField("   예약번호를 입력해 주세요.", 25, 25);
             numField.setBackground(Color.WHITE);
             numField.setForeground(Color.GRAY);
             numField.setPreferredSize(new Dimension(300, 40));
