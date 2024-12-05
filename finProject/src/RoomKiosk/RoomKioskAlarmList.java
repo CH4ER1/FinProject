@@ -6,27 +6,47 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//알람 목록
+import java.util.ArrayList;
+import java.util.List;
+
 public class RoomKioskAlarmList extends JFrame {
+   private AlarmDatabase alarmDatabase;
+   
     public RoomKioskAlarmList() {
         super("Hotel Kiosk");
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 닫기 동작 설정
+        
+        //알람데이터베이스 객체 초기화
+        alarmDatabase = new AlarmDatabase();
+        
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
         contentPane.setLayout(new BorderLayout());
         contentPane.add(new NorthPanel(), BorderLayout.NORTH); // 북쪽 패널 추가
-        contentPane.add(new CenterPanel(), BorderLayout.CENTER); // 가운데 패널 추가
+        contentPane.add(new CenterPanel(alarmDatabase), BorderLayout.CENTER); // 가운데 패널 추가
         contentPane.add(new SouthPanel(), BorderLayout.SOUTH); // 하단 패널 추가
         contentPane.add(new EastPanel(), BorderLayout.EAST);
         contentPane.add(new WestPanel(), BorderLayout.WEST);
-
+        
+        
+      //스크롤 추가
+        CenterPanel centerPanel = new CenterPanel(alarmDatabase);
+        JScrollPane scrollPane = new JScrollPane(centerPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16); // 스크롤 속도
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+        
         setVisible(true); // 프레임을 화면에 표시
-    }
+        
+        
+ }
 
     public static void main(String[] args) {
         new RoomKioskAlarmList();
     }
-
+    
     class NorthPanel extends JPanel {
         public NorthPanel() {
             setBackground(new Color(255, 220, 200));
@@ -52,7 +72,7 @@ public class RoomKioskAlarmList extends JFrame {
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(255, 220, 200));
             JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/room_logo.png");
+            ImageIcon icon = new ImageIcon("images/logo2.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
             logoPanel.setPreferredSize(new Dimension(700, 100));
@@ -87,21 +107,31 @@ public class RoomKioskAlarmList extends JFrame {
         }
     }
 
-    class CenterPanel extends JPanel {
-        public CenterPanel() {
+    class CenterPanel extends JPanel {   
+       private AlarmDatabase alarmDatabase;
+       
+        public CenterPanel(AlarmDatabase alarmDatabase) {
+           this.alarmDatabase = alarmDatabase;
             setBackground(new Color(255, 220, 200));
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // 세로 방향으로 배치
-
-            add(createAlarmList(8, 45, true, false, new Color(251,173,151)));
-            add(Box.createRigidArea(new Dimension(0, 20)));
-            add(createAlarmList(12, 40, false, true, new Color(251,173,151)));
-            add(Box.createRigidArea(new Dimension(0, 20)));
-            add(createAlarmList(10, 10, true, false, new Color(251,173,151)));
-            add(Box.createRigidArea(new Dimension(0, 20)));
-            add(createAlarmList(5, 28, true, true, new Color(251,173,151)));
-            add(Box.createRigidArea(new Dimension(0, 20)));
+            
+            
+            //알람데이터 가져오기
+            List<Alarm> alarms = alarmDatabase.getAlarms();  
+            
+            for(Alarm alarm : alarms) {
+               boolean isDay = alarm.get_ampm().equalsIgnoreCase("오전");
+               String daysLabel = getDays(alarm.get_hour(),alarm.get_minute(),isDay);
+               add(createAlarmList(
+                     alarm.get_hour(),
+                     alarm.get_minute(),
+                     isDay,
+                     alarm.isOn(),
+                     new Color(251, 173, 151)
+                     ));
+               add(Box.createRigidArea(new Dimension(0,  20))); // 간격 추가
+            }    
         }
-        
         // 알람 목록 Panel
         private JPanel createAlarmList(int hour, int minute, boolean isDay, boolean onAlarm, Color bgColor) {
             JPanel panel = new JPanel();
@@ -114,17 +144,17 @@ public class RoomKioskAlarmList extends JFrame {
 
             // CompoundBorder를 사용하여 두 테두리 결합
             panel.setBorder(new CompoundBorder(outerBorder, new CompoundBorder(innerPadding, innerBorder)));
-            panel.setPreferredSize(new Dimension(680, 100)); // 패널 크기 조절
+            panel.setPreferredSize(new Dimension(500, 80)); // 패널 크기 조절
 
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(15, 15, 15, 15); // 여백 설정
             gbc.fill = GridBagConstraints.HORIZONTAL;
-
+            
             // 알람이 적용되는 요일이 적힌 레이블
-            JLabel dayAlarm = createLabel("매일");
+            JLabel dayAlarm = createLabel(getDays(hour, minute, isDay));
             dayAlarm.setForeground(new Color(255,236,236));
-            dayAlarm.setFont(new Font("KoPubDotum Bold", Font.BOLD, 20));
-            dayAlarm.setPreferredSize(new Dimension(5, 40)); // 크기 조정
+            dayAlarm.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18));
+            dayAlarm.setPreferredSize(new Dimension(50, 40)); // 크기 조정
             dayAlarm.setHorizontalAlignment(SwingConstants.LEFT); // 왼쪽 정렬
             gbc.gridx = 0;
             panel.add(dayAlarm, gbc);
@@ -132,7 +162,7 @@ public class RoomKioskAlarmList extends JFrame {
             // 알람 적용 시간이 적힌 레이블
             JLabel time_alarm = createLabel(hour + ":" + minute);
             time_alarm.setForeground(new Color(255,236,231));
-            time_alarm.setFont(new Font("KoPubDotum Bold", Font.BOLD, 60));
+            time_alarm.setFont(new Font("KoPubDotum Bold", Font.BOLD, 50));
             time_alarm.setVerticalAlignment(SwingConstants.CENTER);  // 세로로 중앙 정렬
             time_alarm.setPreferredSize(new Dimension(150, 70)); // 크기 조정
             gbc.gridx = 1;
@@ -140,7 +170,7 @@ public class RoomKioskAlarmList extends JFrame {
 
             // 오전/오후 여부가 적힌 레이블
             JLabel dayNight = createLabel("");
-            if (isDay == true) {
+            if (isDay) {
                 dayNight.setText("오전");
             } else {
                 dayNight.setText("오후");
@@ -163,6 +193,25 @@ public class RoomKioskAlarmList extends JFrame {
             panel.add(alarmOnButton, gbc);
             return panel;
         }
+        
+        private String getDays(int hour, int minute, boolean isDay) {
+           for(Alarm alarm : alarmDatabase.getAlarms()) {
+              if(alarm.get_hour()== hour&&alarm.get_minute()==minute &&
+                    ((isDay && alarm.get_ampm().equalsIgnoreCase("오전")) || 
+                          (!isDay && alarm.get_ampm().equalsIgnoreCase("오후")))) {
+                 //매일 선택된 경우
+                 if(alarm.isEveryday()) {
+                    return "매일";                    
+                 }
+                 //요일이 선택된 경우
+                 else if(!alarm.get_SelectedDays().isEmpty()) {
+                    return alarm.get_SelectedDays();
+                 }
+              }
+           }
+           return " ";
+        }
+        
         
       // 액션 리스너 추가 
       class MyActionListener implements ActionListener {
@@ -309,4 +358,4 @@ public class RoomKioskAlarmList extends JFrame {
             setPreferredSize(new Dimension(70, 300));
         }
     }
-}
+ }

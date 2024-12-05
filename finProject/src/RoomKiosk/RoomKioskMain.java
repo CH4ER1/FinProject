@@ -145,7 +145,6 @@ public class RoomKioskMain extends JFrame {
         //왼쪽 패널 빈공간 설정
         public EastPanel() {
             setBackground(new Color(255, 220, 200));
-            add(new JLabel("       "));
             setPreferredSize(new Dimension(100, 300));
         }
     }
@@ -154,7 +153,6 @@ public class RoomKioskMain extends JFrame {
         //왼쪽 패널 빈공간 설정
         public WestPanel() {
             setBackground(new Color(255, 220, 200));
-            add(new JLabel("       "));
             setPreferredSize(new Dimension(100, 300));
         }
     }

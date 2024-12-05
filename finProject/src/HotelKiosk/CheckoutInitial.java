@@ -1,8 +1,5 @@
 package HotelKiosk;
 import javax.swing.*;
-
-import HotelKiosk.SelfCheckinInitial.CPanel;
-
 import java.awt.*;
 import java.util.concurrent.Flow;
 import java.awt.event.ActionListener;

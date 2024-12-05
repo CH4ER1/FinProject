@@ -97,26 +97,25 @@ public class RoomKioskFoodFin extends JFrame {
            gbc.fill = GridBagConstraints.CENTER;
            gbc.anchor = GridBagConstraints.CENTER;
 
-           // 주문 번호 제목 ("주문 번호")를 담을 패널
            JPanel titlePanel = new JPanel();
            titlePanel.setPreferredSize(new Dimension(80, 40)); // 직사각형 크기 설정
            titlePanel.setBackground(new Color(229, 158, 138)); // 직사각형 배경색
            titlePanel.setLayout(new GridBagLayout()); // 중앙 정렬
 
-           // 주문 번호 제목 ("주문 번호")
-           JLabel roomLabel = new JLabel("주문 번호");
+           JLabel roomLabel = new JLabel("결제 완료");
            roomLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 14));
            roomLabel.setForeground(Color.WHITE); // 텍스트 색상
            titlePanel.add(roomLabel); // 텍스트를 패널에 추가
            gbc.gridy = 0; // 첫 번째 행
            add(titlePanel, gbc);
 
-           // 주문 번호 ("146")
-           JLabel roomNumber = new JLabel("146");
-           roomNumber.setFont(new Font("Elephant", Font.PLAIN, 36)); // 글씨 크기 조정
-           roomNumber.setForeground(new Color(223, 122, 118));
-           gbc.gridy = 1; // 두 번째 행
-           add(roomNumber, gbc);
+           ImageIcon icon = new ImageIcon("images/roomservice.png");
+           Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+           ImageIcon scaledIcon = new ImageIcon(img);
+           JLabel roomserviceLabel = new JLabel(scaledIcon);
+           gbc.gridy = 1;
+           add(roomserviceLabel, gbc);
+           
 
            JLabel completeMessage = new JLabel("결제가 완료되었습니다.");
            completeMessage.setFont(new Font("KoPubDotum Bold", Font.BOLD, 20));

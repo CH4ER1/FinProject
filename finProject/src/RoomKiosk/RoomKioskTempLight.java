@@ -1,6 +1,5 @@
-// 온도, 조명 조절
-// 데이터베이스 미연동
 package RoomKiosk;
+
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -8,25 +7,15 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
  
 public class RoomKioskTempLight extends JFrame {
    private Integer roomNumber = 801;
-   private static Integer nowTemp; 
-   private static Boolean nowLight1, nowLight2, nowLight3;
-   private TempLightDatabase dbTempLight; 
+   private static Integer nowTemp = 22; // 기본 온도 22
+   private static Boolean nowLight1 = false;
+   private static Boolean nowLight2 = false;
+   private static Boolean nowLight3 = false;
     public RoomKioskTempLight() {
-        super("Hotel Kiosk");       
-        try {
-            dbTempLight = new TempLightDatabase(); // 데이터베이스 연결 초기화
-            nowTemp = dbTempLight.getTemp(roomNumber); // 데이터베이스에 저장되어 있던 온도 데이터 불러옴
-            nowLight1 = dbTempLight.getLight1(roomNumber);
-            nowLight2 = dbTempLight.getLight2(roomNumber);
-            nowLight3 = dbTempLight.getLight3(roomNumber);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
+        super("Hotel Kiosk");      
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 닫기 동작 설정
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
@@ -184,13 +173,8 @@ public class RoomKioskTempLight extends JFrame {
             up_button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try {
                        nowTemp++;
                        now_temp.setText(nowTemp+"℃");
-                        dbTempLight.upsertRoom(roomNumber, nowTemp, null, null, null);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
                 }
             });
             
@@ -198,13 +182,8 @@ public class RoomKioskTempLight extends JFrame {
             down_button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    try {
                         nowTemp--;
                        now_temp.setText(nowTemp+"℃");
-                        dbTempLight.upsertRoom(roomNumber, nowTemp, null, null, null);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
                 }
             });
             
@@ -289,66 +268,36 @@ public class RoomKioskTempLight extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                    if (nowLight1 == false) {
-                        try {
                            nowLight1 = true;
-                            dbTempLight.upsertRoom(roomNumber, null, nowLight1, null, null);
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
                    }
                    else {
-                        try {
                            nowLight1 = false;
-                            dbTempLight.upsertRoom(roomNumber, null, nowLight1, null, null);
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
                    }
                 }
             });
-            
-            // Button 클릭 이벤트 처리
             switch_button2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                    if (nowLight2 == false) {
-                        try {
                            nowLight2 = true;
-                            dbTempLight.upsertRoom(roomNumber, null, null, nowLight2, null);
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
                    }
                    else {
-                        try {
                            nowLight2 = false;
-                            dbTempLight.upsertRoom(roomNumber, null, null, nowLight2, null);
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
                    }
                 }
             });
+            
+
             
             // Button 클릭 이벤트 처리
             switch_button3.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                    if (nowLight3 == false) {
-                        try {
                            nowLight3 = true;
-                            dbTempLight.upsertRoom(roomNumber, null, null, null, nowLight3);
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
                    }
                    else {
-                        try {
                            nowLight3 = false;
-                            dbTempLight.upsertRoom(roomNumber, null, null, null, nowLight3);
-                        } catch (SQLException ex) {
-                            ex.printStackTrace();
-                        }
                    }
                 }
             });
