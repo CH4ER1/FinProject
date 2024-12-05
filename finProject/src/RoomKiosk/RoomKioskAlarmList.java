@@ -13,7 +13,7 @@ public class RoomKioskAlarmList extends JFrame {
    private AlarmDatabase alarmDatabase;
    
     public RoomKioskAlarmList() {
-        super("Hotel Kiosk");
+        super("Room Kiosk");
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 닫기 동작 설정
         
@@ -72,7 +72,7 @@ public class RoomKioskAlarmList extends JFrame {
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(255, 220, 200));
             JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/logo2.png");
+            ImageIcon icon = new ImageIcon("images/brownLogo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
             logoPanel.setPreferredSize(new Dimension(700, 100));

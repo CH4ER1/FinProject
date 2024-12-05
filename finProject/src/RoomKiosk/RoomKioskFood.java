@@ -40,59 +40,61 @@ public class RoomKioskFood extends JFrame {
     // 상단 패널: 로고 및 텍스트를 표시
     class NPanel extends JPanel {
         public NPanel() {
-            setBackground(new Color(255, 201, 169)); // 배경색 설정
-            setLayout(new GridBagLayout()); // GridBag 레이아웃 사용
-             
+            setBackground(new Color(255, 220, 200));
+            setLayout(new GridBagLayout()); // GridBagLayout 사용
+
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.weightx = 1.0;            
+            gbc.weightx = 1.0; // 가로 방향으로 확대
+
+            // 빈 레이블 추가
             gbc.gridx = 0;
             gbc.gridy = 0;
-            gbc.weighty = 0.1;
-            
+            gbc.weighty = 0.1; // 빈 레이블의 세로 비율
             JLabel emptyLabel = new JLabel();
             emptyLabel.setOpaque(true);
-            emptyLabel.setBackground(new Color(255, 201, 169));
-            emptyLabel.setPreferredSize(new Dimension(700, 20));
-            add(emptyLabel, gbc);
-            
+            emptyLabel.setBackground(new Color(255, 220, 200));
+            emptyLabel.setPreferredSize(new Dimension(700, 40)); // 세로 크기 조절
+            add(emptyLabel, gbc); // 첫 번째 셀에 빈 레이블 추가
+
+            // 로고 패널
             gbc.gridy = 1; // 두 번째 행
             gbc.weighty = 0.0; // 로고 패널의 세로 비율
-            
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            logoPanel.setBackground(new Color(255, 201, 169));
+            logoPanel.setBackground(new Color(255, 220, 200));
             JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/BlackLogo.png");
+            ImageIcon icon = new ImageIcon("images/brownLogo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
-            logoPanel.setPreferredSize(new Dimension(700,110));
+            logoPanel.setPreferredSize(new Dimension(700, 100));
             add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
 
+            // 텍스트 패널
             gbc.gridy = 2; // 세 번째 행
-            gbc.weighty = 0.0;
-            gbc.insets = new Insets(0, 0, 30, 0);
+            gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
             JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            textPanel.setBackground(new Color(255, 201, 169));
-            
+            textPanel.setBackground(new Color(255, 220, 200));
+
             JLabel leftBar = new JLabel();
             leftBar.setOpaque(true);
             leftBar.setBackground(Color.WHITE);
-            leftBar.setPreferredSize(new Dimension(250, 3));
-            
+            leftBar.setPreferredSize(new Dimension(200, 3));
+
             JLabel rightBar = new JLabel();
             rightBar.setOpaque(true);
             rightBar.setBackground(Color.WHITE);
-            rightBar.setPreferredSize(new Dimension(250, 3));
-            
-            JLabel textLabel = new JLabel("   룸 서비스   ");
-            textLabel.setForeground(new Color(132, 107, 100));
-            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18));
-            
+            rightBar.setPreferredSize(new Dimension(200, 3));
+
+            JLabel textLabel = new JLabel("알람 목록");
+            textLabel.setForeground(new Color(95, 70, 70));
+            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 24)); // 글꼴 및 크기 설정
+            textPanel.setPreferredSize(new Dimension(700, 70));
+
             textPanel.add(leftBar, BorderLayout.WEST);
             textPanel.add(textLabel, BorderLayout.CENTER);
             textPanel.add(rightBar, BorderLayout.EAST);
-            
-            add(textPanel, gbc);
+
+            add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
         }
     }
 
@@ -104,15 +106,15 @@ public class RoomKioskFood extends JFrame {
         public CPanel() {
             setLayout(new BorderLayout());
             JPanel categoryPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            categoryPanel.setBackground(new Color(255, 201, 169));
+            categoryPanel.setBackground(new Color(255, 220, 200));
             categoryPanel.setAlignmentY(CENTER_ALIGNMENT);
             String[] categories = {"식사류", "주류", "기타"};
             JButton[] categoryButtons = new JButton[categories.length];
 
             for (int i = 0; i < categories.length; i++) {
                 categoryButtons[i] = new NameButton(categories[i]);
-                categoryButtons[i].setBackground(new Color(255, 236, 236));
-                categoryButtons[i].setForeground(new Color(203, 134, 136));
+                categoryButtons[i].setBackground(new Color(255, 220, 200));
+                categoryButtons[i].setForeground(new Color(255, 220, 200));
                 categoryButtons[i].setFont(new Font("KoPubDotum Bold", Font.PLAIN, 14));
                 categoryButtons[i].setAlignmentY(Component.CENTER_ALIGNMENT); // 수평 중앙 정렬
                 int index = i;
@@ -123,7 +125,7 @@ public class RoomKioskFood extends JFrame {
 
             menuPanel = new JPanel();
             menuPanel.setLayout(new GridLayout(2, 3, 10, 10));
-            menuPanel.setBackground(new Color(255, 236, 236));
+            menuPanel.setBackground(new Color(255, 220, 200));
             menuPanel.setAlignmentX(CENTER_ALIGNMENT);
             menuPanel.setPreferredSize(new Dimension(400,400));
             add(menuPanel, BorderLayout.CENTER);
@@ -224,13 +226,13 @@ public class RoomKioskFood extends JFrame {
     class SPanel extends JPanel {
         public SPanel() {
             setLayout(new BorderLayout());
-            setBackground(new Color(255, 201, 169));
+            setBackground(new Color(255, 220, 200));
 
             totalLabel = new JLabel("현재 가격: " + totalPrice + "원", SwingConstants.CENTER);
             totalLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 16));
 
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-            buttonPanel.setBackground(new Color(255, 201, 169));
+            buttonPanel.setBackground(new Color(255, 220, 200));
             
             NameButton backButton = new NameButton("메인으로 돌아가기");
             NameButton confirmButton = new NameButton("주문하기");
@@ -261,7 +263,7 @@ public class RoomKioskFood extends JFrame {
     class WPanel extends JPanel {
         public WPanel() {
             setPreferredSize(new Dimension(10, 0));
-            setBackground(new Color(255, 201, 169));
+            setBackground(new Color(255, 220, 200));
         }
     }
 
@@ -269,7 +271,7 @@ public class RoomKioskFood extends JFrame {
     class EPanel extends JPanel {
         public EPanel() {
             setPreferredSize(new Dimension(10, 0));
-            setBackground(new Color(255, 201, 169));
+            setBackground(new Color(255, 220, 200));
         }
     }
     

@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class RoomKioskMeal extends JFrame {
     public RoomKioskMeal() {
-        super("Hotel Kiosk");
+        super("Room Kiosk");
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 닫기 동작 설정
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
@@ -33,7 +33,7 @@ public class RoomKioskMeal extends JFrame {
     public static void main(String[] args) {
         new RoomKioskMeal();
     }
-
+    
     class NorthPanel extends JPanel {
         public NorthPanel() {
             setBackground(new Color(255, 220, 200));
@@ -59,7 +59,7 @@ public class RoomKioskMeal extends JFrame {
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(255, 220, 200));
             JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/kiosk.png");
+            ImageIcon icon = new ImageIcon("images/brownLogo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
             logoPanel.setPreferredSize(new Dimension(700, 100));
@@ -81,7 +81,7 @@ public class RoomKioskMeal extends JFrame {
             rightBar.setBackground(Color.WHITE);
             rightBar.setPreferredSize(new Dimension(200, 3));
 
-            JLabel textLabel = new JLabel("조식권 구매");
+            JLabel textLabel = new JLabel("알람 목록");
             textLabel.setForeground(new Color(95, 70, 70));
             textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 24)); // 글꼴 및 크기 설정
             textPanel.setPreferredSize(new Dimension(700, 70));

@@ -49,10 +49,10 @@ public class RoomKioskMain extends JFrame {
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(255, 220, 200));
             JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/kiosk.png");
+            ImageIcon icon = new ImageIcon("images/brownLogo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
-            logoPanel.setPreferredSize(new Dimension(700,100));
+            logoPanel.setPreferredSize(new Dimension(700, 100));
             add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
 
             // 텍스트 패널
@@ -60,11 +60,26 @@ public class RoomKioskMain extends JFrame {
             gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
             JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             textPanel.setBackground(new Color(255, 220, 200));
-            JLabel textLabel = new JLabel("원하시는 서비스를 선택해 주세요.");
+
+            JLabel leftBar = new JLabel();
+            leftBar.setOpaque(true);
+            leftBar.setBackground(Color.WHITE);
+            leftBar.setPreferredSize(new Dimension(200, 3));
+
+            JLabel rightBar = new JLabel();
+            rightBar.setOpaque(true);
+            rightBar.setBackground(Color.WHITE);
+            rightBar.setPreferredSize(new Dimension(200, 3));
+
+            JLabel textLabel = new JLabel("알람 목록");
             textLabel.setForeground(new Color(95, 70, 70));
-            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 20)); // 글꼴 및 크기 설정
-            textPanel.setPreferredSize(new Dimension(700,70));
-            textPanel.add(textLabel);
+            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 24)); // 글꼴 및 크기 설정
+            textPanel.setPreferredSize(new Dimension(700, 70));
+
+            textPanel.add(leftBar, BorderLayout.WEST);
+            textPanel.add(textLabel, BorderLayout.CENTER);
+            textPanel.add(rightBar, BorderLayout.EAST);
+
             add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
         }
     }

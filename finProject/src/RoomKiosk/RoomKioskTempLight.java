@@ -14,7 +14,7 @@ public class RoomKioskTempLight extends JFrame {
    private static Boolean nowLight2 = false;
    private static Boolean nowLight3 = false;
     public RoomKioskTempLight() {
-        super("Hotel Kiosk");      
+        super("Room Kiosk");      
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 닫기 동작 설정
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
@@ -58,7 +58,7 @@ public class RoomKioskTempLight extends JFrame {
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(255, 220, 200));
             JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/room_logo.png");
+            ImageIcon icon = new ImageIcon("images/brownLogo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
             logoPanel.setPreferredSize(new Dimension(700, 100));
@@ -80,7 +80,7 @@ public class RoomKioskTempLight extends JFrame {
             rightBar.setBackground(Color.WHITE);
             rightBar.setPreferredSize(new Dimension(200, 3));
 
-            JLabel textLabel = new JLabel("온도/조명 조절");
+            JLabel textLabel = new JLabel("알람 목록");
             textLabel.setForeground(new Color(95, 70, 70));
             textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 24)); // 글꼴 및 크기 설정
             textPanel.setPreferredSize(new Dimension(700, 70));
@@ -92,7 +92,7 @@ public class RoomKioskTempLight extends JFrame {
             add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
         }
     }
-
+    
     class CenterPanel extends JPanel {
        //int temperature = 0;
         public CenterPanel() {

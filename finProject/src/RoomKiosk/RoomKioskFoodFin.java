@@ -27,63 +27,63 @@ public class RoomKioskFoodFin extends JFrame {
    }
    
    class NPanel extends JPanel {
-      public NPanel() {
-         setBackground(new Color(255, 201, 169));
-         setLayout(new GridBagLayout());
-         
-         GridBagConstraints gbc = new GridBagConstraints();
-         gbc.fill = GridBagConstraints.HORIZONTAL;
-         gbc.weightx = 1.0;         
-         gbc.gridx = 0;
-         gbc.gridy = 0;
-         gbc.weighty = 0.1;
-         
-         JLabel emptyLabel = new JLabel();
-         emptyLabel.setOpaque(true);
-         emptyLabel.setBackground(new Color(255, 201, 169));
-         emptyLabel.setPreferredSize(new Dimension(700, 10));
-         add(emptyLabel, gbc);
-         
-            gbc.gridy = 1; // 두 번째 행
-            gbc.weighty = 0.0; // 로고 패널의 세로 비율
-            
-            JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            logoPanel.setBackground(new Color(255, 201, 169));
-            JLabel logo = new JLabel("");
-            ImageIcon icon = new ImageIcon("images/BlackLogo.png");
-            logo.setIcon(icon);
-            logoPanel.add(logo);
-            logoPanel.setPreferredSize(new Dimension(700,50));
-            add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
+       public NPanel() {
+           setBackground(new Color(255, 220, 200));
+           setLayout(new GridBagLayout()); // GridBagLayout 사용
 
-            // 텍스트 패널
-            gbc.gridy = 2; // 세 번째 행
-            gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
-            gbc.insets = new Insets(0, 0, 30, 0); // 아래쪽 여백 30px 추가
-            JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            textPanel.setBackground(new Color(255, 201, 169));
-            
-            JLabel leftBar = new JLabel();
-            leftBar.setOpaque(true);
-            leftBar.setBackground(Color.WHITE);
-            leftBar.setPreferredSize(new Dimension(250, 3));
-            
-            JLabel rightBar = new JLabel();
-            rightBar.setOpaque(true);
-            rightBar.setBackground(Color.WHITE);
-            rightBar.setPreferredSize(new Dimension(250, 3));
-            
-            JLabel textLabel = new JLabel("   룸 서비스   ");
-            textLabel.setForeground(new Color(132, 107, 100));
-            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18)); // 글꼴 및 크기 설정
-            
-            textPanel.add(leftBar, BorderLayout.WEST);
-            textPanel.add(textLabel, BorderLayout.CENTER);
-            textPanel.add(rightBar, BorderLayout.EAST);
-           
-            textPanel.setPreferredSize(new Dimension(700, 90));
-            add(textPanel, gbc);
-      }
+           GridBagConstraints gbc = new GridBagConstraints();
+           gbc.fill = GridBagConstraints.HORIZONTAL;
+           gbc.weightx = 1.0; // 가로 방향으로 확대
+
+           // 빈 레이블 추가
+           gbc.gridx = 0;
+           gbc.gridy = 0;
+           gbc.weighty = 0.1; // 빈 레이블의 세로 비율
+           JLabel emptyLabel = new JLabel();
+           emptyLabel.setOpaque(true);
+           emptyLabel.setBackground(new Color(255, 220, 200));
+           emptyLabel.setPreferredSize(new Dimension(700, 40)); // 세로 크기 조절
+           add(emptyLabel, gbc); // 첫 번째 셀에 빈 레이블 추가
+
+           // 로고 패널
+           gbc.gridy = 1; // 두 번째 행
+           gbc.weighty = 0.0; // 로고 패널의 세로 비율
+           JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+           logoPanel.setBackground(new Color(255, 220, 200));
+           JLabel logo = new JLabel("");
+           ImageIcon icon = new ImageIcon("images/brownLogo.png");
+           logo.setIcon(icon);
+           logoPanel.add(logo);
+           logoPanel.setPreferredSize(new Dimension(700, 100));
+           add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
+
+           // 텍스트 패널
+           gbc.gridy = 2; // 세 번째 행
+           gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
+           JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+           textPanel.setBackground(new Color(255, 220, 200));
+
+           JLabel leftBar = new JLabel();
+           leftBar.setOpaque(true);
+           leftBar.setBackground(Color.WHITE);
+           leftBar.setPreferredSize(new Dimension(200, 3));
+
+           JLabel rightBar = new JLabel();
+           rightBar.setOpaque(true);
+           rightBar.setBackground(Color.WHITE);
+           rightBar.setPreferredSize(new Dimension(200, 3));
+
+           JLabel textLabel = new JLabel("알람 목록");
+           textLabel.setForeground(new Color(95, 70, 70));
+           textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 24)); // 글꼴 및 크기 설정
+           textPanel.setPreferredSize(new Dimension(700, 70));
+
+           textPanel.add(leftBar, BorderLayout.WEST);
+           textPanel.add(textLabel, BorderLayout.CENTER);
+           textPanel.add(rightBar, BorderLayout.EAST);
+
+           add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
+       }
    }
    
    class CPanel extends JPanel {
@@ -136,7 +136,7 @@ public class RoomKioskFoodFin extends JFrame {
   
    class WPanel extends JPanel {
       public WPanel() {
-         setBackground(new Color(255, 201, 169));
+         setBackground(new Color(255, 220, 200));
          add(new JLabel("       "));
          setPreferredSize(new Dimension(100, 300));
       }
@@ -144,7 +144,7 @@ public class RoomKioskFoodFin extends JFrame {
    
    class EPanel extends JPanel {
       public EPanel() {
-         setBackground(new Color(255, 201, 169));
+         setBackground(new Color(255, 220, 200));
          add(new JLabel("       "));
          setPreferredSize(new Dimension(100, 300));
       }
@@ -154,7 +154,7 @@ public class RoomKioskFoodFin extends JFrame {
        private int remainingTime = 10; // 초기 카운트다운 시간
 
        public SPanel() {
-           setBackground(new Color(255, 201, 169));
+           setBackground(new Color(255, 220, 200));
            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // 수직 정렬
            setPreferredSize(new Dimension(700, 300));
 
