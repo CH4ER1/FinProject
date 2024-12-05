@@ -94,7 +94,7 @@ public class RoomKioskAlarmList extends JFrame {
             rightBar.setBackground(Color.WHITE);
             rightBar.setPreferredSize(new Dimension(200, 3));
 
-            JLabel textLabel = new JLabel("알람 목록");
+            JLabel textLabel = new JLabel("   알람 목록   ");
             textLabel.setForeground(new Color(95, 70, 70));
             textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 24)); // 글꼴 및 크기 설정
             textPanel.setPreferredSize(new Dimension(700, 70));

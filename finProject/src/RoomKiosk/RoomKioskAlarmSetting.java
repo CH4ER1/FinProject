@@ -87,7 +87,7 @@ public class RoomKioskAlarmSetting extends JFrame{
            rightBar.setBackground(Color.WHITE);
            rightBar.setPreferredSize(new Dimension(200, 3));
 
-           JLabel textLabel = new JLabel("알람 목록");
+           JLabel textLabel = new JLabel("   알람 설정   ");
            textLabel.setForeground(new Color(95, 70, 70));
            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 24)); // 글꼴 및 크기 설정
            textPanel.setPreferredSize(new Dimension(700, 70));
@@ -389,7 +389,7 @@ public class RoomKioskAlarmSetting extends JFrame{
    //왼쪽
    class WestPanel extends JPanel {
       public WestPanel() {
-         setBackground(new Color(255, 201, 169));
+         setBackground(new Color(255, 220, 200));
          add(new JLabel("       "));
          setPreferredSize(new Dimension(100, 300));
       }
@@ -399,7 +399,7 @@ public class RoomKioskAlarmSetting extends JFrame{
    
    class EastPanel extends JPanel {
       public EastPanel() {
-         setBackground(new Color(255, 201, 169));
+         setBackground(new Color(255, 220, 200));
          add(new JLabel("       "));
          setPreferredSize(new Dimension(100, 300));
       }
@@ -409,8 +409,12 @@ public class RoomKioskAlarmSetting extends JFrame{
    class SouthPanel extends JPanel {
       public SouthPanel() {
          
-         setBackground(new Color(255, 201, 169));
+         setBackground(new Color(255, 220, 200));
          setPreferredSize(new Dimension(700, 240));
+
+         JPanel innerPanel = new JPanel();
+         innerPanel.setLayout(new GridBagLayout());
+         innerPanel.setBackground(new Color(255, 220, 200));
          
          // 알람 버튼
            RoundedButton Alarm_btn = new RoundedButton("알람설정",30,30);
