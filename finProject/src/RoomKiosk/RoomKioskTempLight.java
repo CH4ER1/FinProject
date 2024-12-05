@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
  
 public class RoomKioskTempLight extends JFrame {
-   private Integer roomNumber = 801;
    private static Integer nowTemp = 22; // 기본 온도 22
    private static Boolean nowLight1 = false;
    private static Boolean nowLight2 = false;
@@ -542,9 +541,24 @@ public class RoomKioskTempLight extends JFrame {
     
     // 메인 화면으로
     private void goBack() {
-        new RoomKioskMain();
+        new RoomKioskTempLightFin();
         dispose(); // 창 닫기
     }
+    public static Integer getNowTemp() {
+        return nowTemp;
+    }
+
+    public static Boolean getNowLight1() {
+        return nowLight1;
+    }
+
+    public static Boolean getNowLight2() {
+        return nowLight2;
+    }
+
+    public static Boolean getNowLight3() {
+        return nowLight3;
+    }		
 
     class WestPanel extends JPanel {
         //왼쪽 패널 빈공간 설정

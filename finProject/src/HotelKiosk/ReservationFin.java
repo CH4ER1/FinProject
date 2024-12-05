@@ -132,7 +132,7 @@ public class ReservationFin extends JFrame {
             add(numPanel, gbc);
 
             JLabel resNum = new JLabel(reservationNumber); // 예약 번호 표시
-            resNum.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 36));
+            resNum.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 20));
             resNum.setForeground(Color.WHITE);
             gbc.gridy = 3;
             add(resNum, gbc);
@@ -151,7 +151,7 @@ public class ReservationFin extends JFrame {
 
             // 방 번호 표시
             JLabel roomNumberLabel = new JLabel(roomNumber != null ? roomNumber : "정보 없음");
-            roomNumberLabel.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 36));
+            roomNumberLabel.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 20));
             roomNumberLabel.setForeground(Color.WHITE);
             gbc.gridy = 5;
             add(roomNumberLabel, gbc);

@@ -1,8 +1,5 @@
 package RoomKiosk;
 import javax.swing.*;
-
-import RoomKiosk.RoomKioskFoodFin.SPanel;
-
 import java.awt.*;
 import java.util.concurrent.Flow;
 import java.awt.event.ActionEvent;
@@ -94,7 +91,7 @@ public class RoomKioskTempLightFin extends JFrame {
 		public SPanel() {
 	           setBackground(new Color(255, 201, 169));
 	           setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // 수직 정렬
-	           setPreferredSize(new Dimension(700, 200));
+	           setPreferredSize(new Dimension(700, 180));
 
 	           // 상단 여백
 	           add(Box.createVerticalGlue());
@@ -140,56 +137,105 @@ public class RoomKioskTempLightFin extends JFrame {
 	         setPreferredSize(new Dimension(100, 300));
 		}
 	}
-	
 	class CPanel extends JPanel {
-		public CPanel() {
-	          setBackground(new Color(255, 236, 236));
-	           setLayout(new GridBagLayout()); // GridBagLayout 사용
+	    public CPanel() {
+	        Integer temperature = RoomKioskTempLight.getNowTemp();
+	        Boolean light1 = RoomKioskTempLight.getNowLight1();
+	        Boolean light2 = RoomKioskTempLight.getNowLight2();
+	        Boolean light3 = RoomKioskTempLight.getNowLight3();
 
-	           GridBagConstraints gbc = new GridBagConstraints();
-	           gbc.insets = new Insets(10, 10, 10, 10); // 컴포넌트 간 간격
-	           gbc.fill = GridBagConstraints.CENTER;
-	           gbc.anchor = GridBagConstraints.CENTER;
+	        setBackground(new Color(255, 236, 236));
+	        setLayout(new GridBagLayout());
 
-	           JPanel titlePanel = new JPanel();
-	           titlePanel.setPreferredSize(new Dimension(80, 40)); // 직사각형 크기 설정
-	           titlePanel.setBackground(new Color(229, 158, 138)); // 직사각형 배경색
-	           titlePanel.setLayout(new GridBagLayout()); // 중앙 정렬
+	        GridBagConstraints gbc = new GridBagConstraints();
+	        gbc.insets = new Insets(5, 5, 5, 5);
+	        gbc.fill = GridBagConstraints.CENTER;
+	        gbc.anchor = GridBagConstraints.CENTER;
 
-	           JLabel roomLabel = new JLabel("설정 완료");
-	           roomLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 14));
-	           roomLabel.setForeground(Color.WHITE); // 텍스트 색상
-	           titlePanel.add(roomLabel); // 텍스트를 패널에 추가
-	           gbc.gridy = 0; // 첫 번째 행
-	           add(titlePanel, gbc);
+	        // Title Panel
+	        JPanel titlePanel = new JPanel();
+	        titlePanel.setPreferredSize(new Dimension(80, 40));
+	        titlePanel.setBackground(new Color(229, 158, 138));
+	        titlePanel.setLayout(new GridBagLayout());
 
-	           ImageIcon icon = new ImageIcon("images/temperature.png");
-	           Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-	           ImageIcon scaledIcon = new ImageIcon(img);
-	           JLabel roomserviceLabel = new JLabel(scaledIcon);
-	           gbc.gridy = 1;
-	           add(roomserviceLabel, gbc);
-	           
+	        JLabel roomLabel = new JLabel("설정 완료");
+	        roomLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 14));
+	        roomLabel.setForeground(Color.WHITE);
+	        titlePanel.add(roomLabel);
+	        gbc.gridy = 0; // 첫 번째 행
+	        gbc.gridx = 0; // 중앙 정렬
+	        gbc.gridwidth = 4; // 전체 열 사용
+	        add(titlePanel, gbc);
 
-	           JLabel completeMessage = new JLabel("온도 및 조명 설정이 완료되었습니다");
-	           completeMessage.setFont(new Font("KoPubDotum Bold", Font.BOLD, 20));
-	           completeMessage.setForeground(new Color(132, 107, 100));
-	           gbc.gridy = 2; // 세 번째 행
-	           add(completeMessage, gbc);
+	        // Image
+	        ImageIcon icon = new ImageIcon("images/temperature.png");
+	        Image img = icon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+	        ImageIcon scaledIcon = new ImageIcon(img);
+	        JLabel tempserviceLabel = new JLabel(scaledIcon);
+	        gbc.gridy = 1;
+	        gbc.gridwidth = 4; // 전체 열 사용
+	        add(tempserviceLabel, gbc);
 
-	           JLabel subMessage = new JLabel("설정 조명");
-	           subMessage.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 16));
-	           subMessage.setForeground(new Color(212, 159, 159));
-	           gbc.gridy = 3; // 네 번째 행
-	           add(subMessage, gbc);
-	           
-	           JLabel tempMessage = new JLabel("설정 온도");
-	           tempMessage.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 16));
-	           tempMessage.setForeground(new Color(212, 159, 159));
-	           gbc.gridy = 4; // 네 번째 행
-	           add(tempMessage, gbc);
-	           setPreferredSize(new Dimension(700, 600));
-		}
+	        // Complete Message
+	        JLabel completeMessage = new JLabel("온도 및 조명 설정이 완료되었습니다");
+	        completeMessage.setFont(new Font("KoPubDotum Bold", Font.BOLD, 20));
+	        completeMessage.setForeground(new Color(132, 107, 100));
+	        gbc.gridy = 2;
+	        gbc.gridwidth = 4; // 전체 열 사용
+	        add(completeMessage, gbc);
+
+	        // Temperature
+	        JLabel tempMessage = new JLabel("설정 온도");
+	        tempMessage.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 16));
+	        tempMessage.setForeground(new Color(132, 107, 100));
+	        gbc.gridy = 3;
+	        gbc.gridwidth = 4; // 전체 열 사용
+	        add(tempMessage, gbc);
+
+	        JLabel tempLabel = new JLabel(temperature + "℃");
+	        tempLabel.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 14));
+	        tempLabel.setForeground(new Color(132, 107, 100));
+	        gbc.gridy = 4;
+	        add(tempLabel, gbc);
+
+	        // Lights
+	        JLabel subMessage = new JLabel("설정 조명");
+	        subMessage.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 16));
+	        subMessage.setForeground(new Color(132, 107, 100));
+	        gbc.gridy = 5;
+	        add(subMessage, gbc);
+
+	        JPanel lightPanel = new JPanel();
+	        lightPanel.setLayout(new GridBagLayout());
+	        lightPanel.setBackground(new Color(255, 236, 236));
+	        GridBagConstraints lightGbc = new GridBagConstraints();
+	        lightGbc.insets = new Insets(5, 5, 5, 5);
+
+	        JLabel lightLabel1 = new JLabel(light1 ? "ON" : "OFF");
+	        lightLabel1.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 16));
+	        lightLabel1.setForeground(new Color(132, 107, 100));
+	        lightGbc.gridx = 0;
+	        lightPanel.add(lightLabel1, lightGbc);
+
+	        JLabel lightLabel2 = new JLabel(light2 ? "ON" : "OFF");
+	        lightLabel2.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 16));
+	        lightLabel2.setForeground(new Color(132, 107, 100));
+	        lightGbc.gridx = 1;
+	        lightPanel.add(lightLabel2, lightGbc);
+
+	        JLabel lightLabel3 = new JLabel(light3 ? "ON" : "OFF");
+	        lightLabel3.setFont(new Font("KoPubDotum Bold", Font.PLAIN, 16));
+	        lightLabel3.setForeground(new Color(132, 107, 100));
+	        lightGbc.gridx = 2;
+	        lightPanel.add(lightLabel3, lightGbc);
+
+	        gbc.gridy = 6;
+	        gbc.gridwidth = 4; // 전체 열 사용
+	        add(lightPanel, gbc);
+
+	        setPreferredSize(new Dimension(700, 600));
+	    }
 	}
+
 
 }
