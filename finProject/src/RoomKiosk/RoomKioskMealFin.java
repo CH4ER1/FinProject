@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class RoomKioskMealFin extends JFrame {
     public RoomKioskMealFin() {
-        super("Hotel Kiosk");
+        super("Room Kiosk");
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 닫기 동작 설정
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
