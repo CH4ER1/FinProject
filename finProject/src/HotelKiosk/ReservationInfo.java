@@ -110,9 +110,37 @@ public class ReservationInfo extends JFrame {
             gbc.gridx = 1;
             add(reservationNumField, gbc);
             
-            JLabel carLabel = createLabel("차량 보유 여부");
+         // 체크인 날짜 레이블
+            JLabel checkInLabel = createLabel("체크인 날짜:");
             gbc.gridx = 0;
             gbc.gridy = 5;
+            add(checkInLabel, gbc);
+
+            // 체크인 날짜 입력 필드
+            RoundedTextField checkInField = new RoundedTextField("   체크인 날짜를 입력해 주세요.", 25, 25);
+            checkInField.setBackground(Color.WHITE);
+            checkInField.setForeground(Color.GRAY);
+            checkInField.setPreferredSize(new Dimension(300, 50)); // 크기 조정
+            gbc.gridx = 1;
+            add(checkInField, gbc);
+
+            // 체크아웃 날짜 레이블
+            JLabel checkOutLabel = createLabel("체크아웃 날짜:");
+            gbc.gridx = 0;
+            gbc.gridy = 6;
+            add(checkOutLabel, gbc);
+
+            // 체크아웃 날짜 입력 필드
+            RoundedTextField checkOutField = new RoundedTextField("   체크아웃 날짜를 입력해 주세요.", 25, 25);
+            checkOutField.setBackground(Color.WHITE);
+            checkOutField.setForeground(Color.GRAY);
+            checkOutField.setPreferredSize(new Dimension(300, 50)); // 크기 조정
+            gbc.gridx = 1;
+            add(checkOutField, gbc);
+            
+            JLabel carLabel = createLabel("차량 보유 여부");
+            gbc.gridx = 0;
+            gbc.gridy = 7;
             add(carLabel, gbc);
             JPanel radioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             radioPanel.setBackground(new Color(104, 90, 90));
@@ -197,7 +225,7 @@ public class ReservationInfo extends JFrame {
 
             gbc.insets = new Insets(30, 150, 5, 150);
             gbc.gridx = 0;
-            gbc.gridy = 6; // 버튼 위치 설정
+            gbc.gridy = 8; // 버튼 위치 설정
             gbc.gridwidth = 2; // 버튼이 두 개의 열을 차지하도록 설정
             add(paymentButton, gbc);
         }
@@ -331,7 +359,7 @@ public class ReservationInfo extends JFrame {
         public SouthPanel() {
             setBackground(new Color(74, 69, 66));
             add(new JLabel("       "));
-            setPreferredSize(new Dimension(700, 150));
+            setPreferredSize(new Dimension(700, 100));
         }
     }
 
