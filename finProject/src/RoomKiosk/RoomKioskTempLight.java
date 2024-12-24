@@ -7,14 +7,16 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
- 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 public class RoomKioskTempLight extends JFrame {
-   private static Integer nowTemp = 22; // 기본 온도 22
-   private static Boolean nowLight1 = false;
-   private static Boolean nowLight2 = false;
-   private static Boolean nowLight3 = false;
+    private static Integer nowTemp = 22; // 기본 온도 22
+    private static Boolean nowLight1 = false;
+    private static Boolean nowLight2 = false;
+    private static Boolean nowLight3 = false;
     public RoomKioskTempLight() {
-        super("Room Kiosk");      
+        super("Room Kiosk");
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 닫기 동작 설정
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
@@ -64,6 +66,14 @@ public class RoomKioskTempLight extends JFrame {
             logoPanel.setPreferredSize(new Dimension(700, 100));
             add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
 
+            logoPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new RoomKioskMain();
+                    SwingUtilities.getWindowAncestor(NorthPanel.this).setVisible(false);
+                }
+            });
+
             // 텍스트 패널
             gbc.gridy = 2; // 세 번째 행
             gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
@@ -92,35 +102,35 @@ public class RoomKioskTempLight extends JFrame {
             add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
         }
     }
-    
+
     class CenterPanel extends JPanel {
-       //int temperature = 0;
+        //int temperature = 0;
         public CenterPanel() {
             setBackground(new Color(255, 220, 200));
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // 세로 방향으로 배치
 
-            // 온도/조명 Panel 추가 
+            // 온도/조명 Panel 추가
             add(createTempPanel(nowTemp, new Color(255,236,236)));
             add(Box.createRigidArea(new Dimension(0, 30)));
             add(createLightPanel(true, new Color(255,236,236)));
             add(Box.createRigidArea(new Dimension(0, 30)));
         }
-        
+
         // 온도 전용 Panel
         private JPanel createTempPanel(int temp, Color bgColor) {
-           nowTemp = temp;
+            nowTemp = temp;
             JPanel panel = new JPanel();
             panel.setLayout(new GridBagLayout()); // GridBagLayout 사용
             panel.setBackground(bgColor);
-            
+
             LineBorder outerBorder = new LineBorder(new Color(203,134,136), 5); // 외부 테두리
             EmptyBorder innerPadding = new EmptyBorder(5, 5, 5, 5); // 내부 여백
             LineBorder innerBorder = new LineBorder(new Color(203,134,136), 2); // 내부 테두리
-            
+
             // CompoundBorder를 사용하여 두 테두리 결합
             panel.setBorder(new CompoundBorder(outerBorder, new CompoundBorder(innerPadding, innerBorder)));
             panel.setPreferredSize(new Dimension(680, 120)); // 패널 크기 조절
-            
+
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(15, 15, 15, 15); // 여백 설정
             gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -132,7 +142,7 @@ public class RoomKioskTempLight extends JFrame {
             paymentButton.setBackground(new Color(229,158,138)); // 버튼 배경색
             paymentButton.setForeground(Color.WHITE);
             panel.add(paymentButton);
-            
+
             // 현재 온도가 적힌 레이블
             JLabel now_temp = createLabel(nowTemp+"℃");
             now_temp.setForeground(new Color(203,134,136));
@@ -140,7 +150,7 @@ public class RoomKioskTempLight extends JFrame {
             now_temp.setPreferredSize(new Dimension(280, 100)); // 크기 조정
             gbc.gridx = 1;
             panel.add(now_temp, gbc);
-            
+
             // 온도 조절용 UP/DOWN 버튼 생성
             TempButton up_button = new TempButton("▲"); // UP
             up_button.setForeground(new Color(229,158,138));
@@ -148,7 +158,7 @@ public class RoomKioskTempLight extends JFrame {
             up_button.setFont(new Font("KoPubDotum Bold", Font.BOLD, 30));
             up_button.setAlignmentX(Component.CENTER_ALIGNMENT); // 중앙 정렬
             up_button.setPreferredSize(new Dimension(70, 70));
-            
+
             TempButton down_button = new TempButton("▼"); // DOWN
             down_button.setForeground(new Color(229,158,138));
             down_button.setBackground(new Color(255,236,236));
@@ -156,36 +166,36 @@ public class RoomKioskTempLight extends JFrame {
 
             down_button.setAlignmentX(Component.CENTER_ALIGNMENT); // 중앙 정렬
             down_button.setPreferredSize(new Dimension(50, 35));
-            
+
             JPanel buttonPanel = new JPanel();
             buttonPanel.setBackground(new Color(255,236,236));
             buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));  // 수직 배치
             buttonPanel.setBorder(new LineBorder(new Color(229,158,138), 3)); // 두께 3픽셀의 테두리
-            
+
             buttonPanel.add(up_button);
             buttonPanel.add(down_button);
             gbc.gridx = 2;
             //panel.add(buttonPanel);
             panel.add(buttonPanel,gbc);
-            
-         // 온도 증가 액션
+
+            // 온도 증가 액션
             up_button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                       nowTemp++;
-                       now_temp.setText(nowTemp+"℃");
+                    nowTemp++;
+                    now_temp.setText(nowTemp+"℃");
                 }
             });
-            
+
             // 온도 감소 액션
             down_button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                        nowTemp--;
-                       now_temp.setText(nowTemp+"℃");
+                    nowTemp--;
+                    now_temp.setText(nowTemp+"℃");
                 }
             });
-            
+
 
             return panel;
         }
@@ -209,7 +219,7 @@ public class RoomKioskTempLight extends JFrame {
             gbc.insets = new Insets(15, 15, 15, 15); // 여백 설정
             gbc.anchor = GridBagConstraints.CENTER;  // 중앙 정렬
             gbc.fill = GridBagConstraints.HORIZONTAL;
-            
+
             // 통합 Panel (버튼끼리 합치기 전용)
             JPanel listPanel = new JPanel();
             listPanel.setBackground(bgColor);
@@ -217,7 +227,7 @@ public class RoomKioskTempLight extends JFrame {
             listPanel.setAlignmentX(CENTER_ALIGNMENT);
             listPanel.setPreferredSize(new Dimension(600, 200)); // 두 버튼을 위한 크기
             listPanel.setMaximumSize(new Dimension(600, 200)); // 최대 크기 설정
-            
+
             // 스위치 목록 Panel
             JPanel switchPanel = new JPanel();
             switchPanel.setBackground(bgColor);
@@ -225,7 +235,7 @@ public class RoomKioskTempLight extends JFrame {
             switchPanel.setAlignmentX(CENTER_ALIGNMENT);
             switchPanel.setPreferredSize(new Dimension(600, 150)); // 두 버튼을 위한 크기
             switchPanel.setMaximumSize(new Dimension(600, 150)); // 최대 크기 설정
-            
+
             switchPanel.add(Box.createRigidArea(new Dimension(10, 0))); // 두 버튼 사이 간격
             EclipseButton switch_button1 = createSwitchButton(nowLight1, new Color(138, 89, 75));
             switchPanel.add(switch_button1);
@@ -237,9 +247,9 @@ public class RoomKioskTempLight extends JFrame {
             switchPanel.add(switch_button3);
             switchPanel.add(Box.createRigidArea(new Dimension(10, 0))); // 두 버튼 사이 간격
             listPanel.add(switchPanel); // 패널에 추가
-            
+
             listPanel.add(Box.createRigidArea(new Dimension(0, 20))); // 두 버튼 사이 간격
-            
+
             // 조명 이름 목록 Panel
             JPanel switchNamePanel = new JPanel();
             switchNamePanel.setBackground(bgColor);
@@ -247,7 +257,7 @@ public class RoomKioskTempLight extends JFrame {
             switchNamePanel.setAlignmentX(CENTER_ALIGNMENT);
             switchNamePanel.setPreferredSize(new Dimension(600, 40)); // 두 버튼을 위한 크기
             switchNamePanel.setMaximumSize(new Dimension(600, 50)); // 최대 크기 설정
-            
+
             switchNamePanel.add(Box.createRigidArea(new Dimension(10, 0))); // 두 버튼 사이 간격
             LightNameButton lightName1 = createSwitchNameButton("조명1", new Color(138, 89, 75));
             switchNamePanel.add(lightName1);
@@ -259,52 +269,52 @@ public class RoomKioskTempLight extends JFrame {
             switchNamePanel.add(lightName3);
             switchNamePanel.add(Box.createRigidArea(new Dimension(10, 0))); // 두 버튼 사이 간격
             listPanel.add(switchNamePanel);
-            
+
             panel.add(listPanel, gbc);
-            
+
             // Button 클릭 이벤트 처리
             switch_button1.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   if (nowLight1 == false) {
-                           nowLight1 = true;
-                   }
-                   else {
-                           nowLight1 = false;
-                   }
+                    if (nowLight1 == false) {
+                        nowLight1 = true;
+                    }
+                    else {
+                        nowLight1 = false;
+                    }
                 }
             });
             switch_button2.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   if (nowLight2 == false) {
-                           nowLight2 = true;
-                   }
-                   else {
-                           nowLight2 = false;
-                   }
+                    if (nowLight2 == false) {
+                        nowLight2 = true;
+                    }
+                    else {
+                        nowLight2 = false;
+                    }
                 }
             });
-            
 
-            
+
+
             // Button 클릭 이벤트 처리
             switch_button3.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   if (nowLight3 == false) {
-                           nowLight3 = true;
-                   }
-                   else {
-                           nowLight3 = false;
-                   }
+                    if (nowLight3 == false) {
+                        nowLight3 = true;
+                    }
+                    else {
+                        nowLight3 = false;
+                    }
                 }
             });
-            
-            
+
+
             return panel;
         }
-        
+
         // 스위치 버튼 추가용 함수 (ON/OFF 여부, 스위치 색)
         private EclipseButton createSwitchButton(boolean power, Color fgColor) {
             EclipseButton switchButton = new EclipseButton("", power);
@@ -313,7 +323,7 @@ public class RoomKioskTempLight extends JFrame {
             switchButton.setLayout(new BoxLayout(switchButton, BoxLayout.Y_AXIS)); // 수직 배치
             switchButton.setAlignmentY(Component.CENTER_ALIGNMENT); // 수평 중앙 정렬
             //switchButton.addActionListener(new MyActionListener(switchButton, power));
-            
+
             // 텍스트 라벨 생성
             JLabel powerLabel = new JLabel(power ? "ON" : "OFF");
             powerLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 35));
@@ -329,38 +339,38 @@ public class RoomKioskTempLight extends JFrame {
             // 버튼 안에 동그란 버튼과 텍스트를 추가
             switchButton.add(Box.createRigidArea(new Dimension(0, 35))); // 버튼과 텍스트 사이 간격
             switchButton.add(powerButton);
-            
+
             switchButton.add(Box.createRigidArea(new Dimension(0, 10))); // 버튼과 텍스트 사이 간격
             switchButton.add(powerLabel);
-            
+
             // Button 클릭 이벤트 처리
             switchButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   if(powerLabel.getText().equals("OFF")) {
-                      powerButton.setForeground(new Color(138, 255, 111));
-                      powerLabel.setText("ON");
-                   }
-                   else {
-                      powerLabel.setText("OFF");
-                      powerButton.setForeground(new Color(248,40,43));
-                   }
+                    if(powerLabel.getText().equals("OFF")) {
+                        powerButton.setForeground(new Color(138, 255, 111));
+                        powerLabel.setText("ON");
+                    }
+                    else {
+                        powerLabel.setText("OFF");
+                        powerButton.setForeground(new Color(248,40,43));
+                    }
                 }
             });
 
 
             return switchButton;
         }
-        
-     // 조명 이름용
+
+        // 조명 이름용
         private LightNameButton createSwitchNameButton(String name, Color bgColor) {
-           LightNameButton ButtonName = new LightNameButton(name);
-           ButtonName.setForeground(Color.WHITE);
-           ButtonName.setPreferredSize(new Dimension(150, 50)); // 버튼 크기 조정
-           ButtonName.setFont(new Font("KoPubDotum Bold", Font.BOLD, 15));
-           ButtonName.setBackground(bgColor); // 버튼 배경색
-           ButtonName.setLayout(new BoxLayout(ButtonName, BoxLayout.Y_AXIS)); // 수직 배치
-           ButtonName.setAlignmentY(Component.CENTER_ALIGNMENT); // 수평 중앙 정렬
+            LightNameButton ButtonName = new LightNameButton(name);
+            ButtonName.setForeground(Color.WHITE);
+            ButtonName.setPreferredSize(new Dimension(150, 50)); // 버튼 크기 조정
+            ButtonName.setFont(new Font("KoPubDotum Bold", Font.BOLD, 15));
+            ButtonName.setBackground(bgColor); // 버튼 배경색
+            ButtonName.setLayout(new BoxLayout(ButtonName, BoxLayout.Y_AXIS)); // 수직 배치
+            ButtonName.setAlignmentY(Component.CENTER_ALIGNMENT); // 수평 중앙 정렬
 
             return ButtonName;
         }
@@ -387,7 +397,7 @@ public class RoomKioskTempLight extends JFrame {
             paymentButton.addActionListener(e -> goBack());
         }
     }
-    
+
     // 모시러 20만큼 깎인 버튼
     class RoundedButton extends JButton {
         public RoundedButton(String label) {
@@ -409,8 +419,8 @@ public class RoomKioskTempLight extends JFrame {
             return new Dimension(270, 60); // 기본 크기 설정
         }
     }
-    
- // 모시러 10만큼 깎인 버튼
+
+    // 모시러 10만큼 깎인 버튼
     class RoundedButtonTen extends JButton {
         public RoundedButtonTen(String label) {
             super(label);
@@ -431,7 +441,7 @@ public class RoomKioskTempLight extends JFrame {
             return new Dimension(100, 40); // 기본 크기 설정
         }
     }
-    
+
     // 온도 조절에 사용된 버튼
     class TempButton extends JButton {
         public TempButton(String label) {
@@ -449,7 +459,7 @@ public class RoomKioskTempLight extends JFrame {
         }
 
     }
-    
+
     // 조명 스위치 전용으로 쓰인 버튼
     class LightNameButton extends JButton {
         public LightNameButton(String label) {
@@ -471,10 +481,10 @@ public class RoomKioskTempLight extends JFrame {
             return new Dimension(200, 50); // 기본 크기 설정
         }
     }
-    
+
     // 원형 버튼 (조명 스위치 이용)
     class EclipseButton extends JButton {
-       private boolean onPower;
+        private boolean onPower;
         public EclipseButton(String label, boolean onPower) {
             super(label);
             this.onPower = onPower;
@@ -506,7 +516,7 @@ public class RoomKioskTempLight extends JFrame {
             return new Dimension(150, 150); // 최대 크기 지정
         }
     }
-    
+
     class OnOffSwitch extends JButton {
         public OnOffSwitch(String label) {
             super(label);
@@ -538,7 +548,7 @@ public class RoomKioskTempLight extends JFrame {
             return new Dimension(10, 10); // 최대 크기 지정
         }
     }
-    
+
     // 메인 화면으로
     private void goBack() {
         new RoomKioskTempLightFin();
@@ -558,7 +568,7 @@ public class RoomKioskTempLight extends JFrame {
 
     public static Boolean getNowLight3() {
         return nowLight3;
-    }		
+    }
 
     class WestPanel extends JPanel {
         //왼쪽 패널 빈공간 설정

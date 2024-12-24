@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 // 룸서비스 화면을 구현하는 RoomKioskFood 클래스
 public class RoomKioskFood extends JFrame {
-   private int roomNumber = 801;
+    private int roomNumber = 801;
     private int totalPrice = 0; // 총 가격을 저장하는 변수
     private ArrayList<String> cart = new ArrayList<>(); // 장바구니 리스트
     private ArrayList<String> cart_name = new ArrayList<>(); // 장바구니 리스트
@@ -29,14 +29,14 @@ public class RoomKioskFood extends JFrame {
         contentPane.add(new EPanel(), BorderLayout.EAST); // 우측 여백 패널
 
         setVisible(true); // 창 표시
-    //    FoodDatabase db = new FoodDatabase();
+        //    FoodDatabase db = new FoodDatabase();
     }
 
     // 프로그램 실행을 위한 main 메서드
     public static void main(String[] args) {
         new RoomKioskFood(); // RoomKioskFood 객체 생성
     }
- 
+
     // 상단 패널: 로고 및 텍스트를 표시
     class NPanel extends JPanel {
         public NPanel() {
@@ -69,6 +69,14 @@ public class RoomKioskFood extends JFrame {
             logoPanel.setPreferredSize(new Dimension(700, 100));
             add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
 
+            logoPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new RoomKioskMain();
+                    SwingUtilities.getWindowAncestor(NPanel.this).setVisible(false);
+                }
+            });
+
             // 텍스트 패널
             gbc.gridy = 2; // 세 번째 행
             gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
@@ -78,12 +86,12 @@ public class RoomKioskFood extends JFrame {
             JLabel leftBar = new JLabel();
             leftBar.setOpaque(true);
             leftBar.setBackground(Color.WHITE);
-            leftBar.setPreferredSize(new Dimension(200, 3));
+            leftBar.setPreferredSize(new Dimension(240, 3));
 
             JLabel rightBar = new JLabel();
             rightBar.setOpaque(true);
             rightBar.setBackground(Color.WHITE);
-            rightBar.setPreferredSize(new Dimension(200, 3));
+            rightBar.setPreferredSize(new Dimension(240, 3));
 
             JLabel textLabel = new JLabel("   룸서비스   ");
             textLabel.setForeground(new Color(95, 70, 70));
@@ -203,13 +211,13 @@ public class RoomKioskFood extends JFrame {
                 menuPanel.add(card);
 
                 imgLabel.addMouseListener(new MouseAdapter() {
-                   
+
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                       if (isOn == false) {
-                          imgLabel.setBorder(BorderFactory.createLineBorder(new Color(229, 158, 138), 5));
-                       }
-                       cart_name.add(name);
+                        if (isOn == false) {
+                            imgLabel.setBorder(BorderFactory.createLineBorder(new Color(229, 158, 138), 5));
+                        }
+                        cart_name.add(name);
                         cart.add(name + " - " + price + "원");
                         totalPrice += price;
                         updateCart();
@@ -233,10 +241,10 @@ public class RoomKioskFood extends JFrame {
 
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
             buttonPanel.setBackground(new Color(255, 220, 200));
-            
-            NameButton backButton = new NameButton("메인으로 돌아가기");
+
+            NameButton backButton = new NameButton("장바구니 확인");
             NameButton confirmButton = new NameButton("주문하기");
-            
+
             backButton.setForeground(Color.WHITE);
             backButton.setFont(new Font("KoPubDotum Bold", Font.BOLD, 12));
             backButton.setBackground(new Color(190, 107, 104));
@@ -244,7 +252,7 @@ public class RoomKioskFood extends JFrame {
             confirmButton.setFont(new Font("KoPubDotum Bold", Font.BOLD, 12));
             confirmButton.setBackground(new Color(190, 107, 104));
 
-            backButton.addActionListener(e -> goBack());
+            backButton.addActionListener(e -> checkOrder());
             confirmButton.addActionListener(e -> confirmOrder());
 
             buttonPanel.add(backButton);
@@ -274,7 +282,7 @@ public class RoomKioskFood extends JFrame {
             setBackground(new Color(255, 220, 200));
         }
     }
-    
+
     // 모시러 20만큼 깎인 버튼
     class RoundedButton extends JButton {
         public RoundedButton(String label) {
@@ -296,7 +304,7 @@ public class RoomKioskFood extends JFrame {
             return new Dimension(270, 60); // 기본 크기 설정
         }
     }
-    
+
     class NameButton extends JButton {
         public NameButton(String label) {
             super(label);
@@ -329,21 +337,37 @@ public class RoomKioskFood extends JFrame {
     private void confirmOrder() {
         StringBuilder message = new StringBuilder("주문 내역:\n");
         Map<String, Integer> choices = new HashMap<>();
-        
+
         for (String item : cart) {
             message.append(item).append("\n");
         }
-        
+
         for (String item : cart_name) {
-           choices.put(item, 1);
+            choices.put(item, 1);
         }
         message.append("\n총 가격: ").append(totalPrice).append("원");
- //       FoodDatabase.insertFood(roomNumber, totalPrice, choices);
+        //       FoodDatabase.insertFood(roomNumber, totalPrice, choices);
         JOptionPane.showMessageDialog(this, message.toString(), "주문 완료", JOptionPane.INFORMATION_MESSAGE);
         totalPrice = 0;
         cart.clear();
         updateCart();
         new RoomKioskFoodFin();
         dispose(); // 현재 창 닫기
+    }
+
+    // 주문 확인 메서드 (장바구니용)
+    private void checkOrder() {
+        StringBuilder message = new StringBuilder("장바구니 목록:\n");
+        Map<String, Integer> choices = new HashMap<>();
+
+        for (String item : cart) {
+            message.append(item).append("\n");
+        }
+
+        for (String item : cart_name) {
+            choices.put(item, 1);
+        }
+        message.append("\n총 가격: ").append(totalPrice).append("원");
+        JOptionPane.showMessageDialog(this, message.toString(), "장바구니", JOptionPane.INFORMATION_MESSAGE);
     }
 }

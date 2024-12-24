@@ -7,6 +7,8 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RoomKioskMeal extends JFrame {
     public RoomKioskMeal() {
@@ -16,8 +18,8 @@ public class RoomKioskMeal extends JFrame {
         Container contentPane = getContentPane(); // 프레임에서 컨텐트팬 받아오기
         contentPane.setLayout(new BorderLayout());
         contentPane.add(new NorthPanel(), BorderLayout.NORTH);
- 
- 
+
+
         CenterPanel centerPanel = new CenterPanel(); // CenterPanel 인스턴스 생성
         SouthPanel southPanel = new SouthPanel(centerPanel); // CenterPanel을 SouthPanel에 전달
         centerPanel.setSouthPanel(southPanel);
@@ -33,7 +35,7 @@ public class RoomKioskMeal extends JFrame {
     public static void main(String[] args) {
         new RoomKioskMeal();
     }
-    
+
     class NorthPanel extends JPanel {
         public NorthPanel() {
             setBackground(new Color(255, 220, 200));
@@ -65,6 +67,14 @@ public class RoomKioskMeal extends JFrame {
             logoPanel.setPreferredSize(new Dimension(700, 100));
             add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
 
+            logoPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new RoomKioskMain();
+                    SwingUtilities.getWindowAncestor(NorthPanel.this).setVisible(false);
+                }
+            });
+
             // 텍스트 패널
             gbc.gridy = 2; // 세 번째 행
             gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
@@ -74,12 +84,12 @@ public class RoomKioskMeal extends JFrame {
             JLabel leftBar = new JLabel();
             leftBar.setOpaque(true);
             leftBar.setBackground(Color.WHITE);
-            leftBar.setPreferredSize(new Dimension(200, 3));
+            leftBar.setPreferredSize(new Dimension(230, 3));
 
             JLabel rightBar = new JLabel();
             rightBar.setOpaque(true);
             rightBar.setBackground(Color.WHITE);
-            rightBar.setPreferredSize(new Dimension(200, 3));
+            rightBar.setPreferredSize(new Dimension(230, 3));
 
             JLabel textLabel = new JLabel("   조식권 구매   ");
             textLabel.setForeground(new Color(95, 70, 70));

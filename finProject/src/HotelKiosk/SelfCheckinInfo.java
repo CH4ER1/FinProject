@@ -1,6 +1,6 @@
-/* SelfCheckinInfo.java 
+/* SelfCheckinInfo.java
  * 셀프 체크인 정보 확인 화면
- * SelfCheckinInitial.java에서 입력한 예약자명, 예약번호에 맞는 예약 정보를 
+ * SelfCheckinInitial.java에서 입력한 예약자명, 예약번호에 맞는 예약 정보를
  * Hotel 데이터베이스의 SelfCheckinInfo 테이블에서 받아와서 나타냄
  */
 package HotelKiosk;
@@ -8,20 +8,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 
 public class SelfCheckinInfo extends JFrame {
-	private String reservationNum;
+    private String reservationNum;
     public SelfCheckinInfo(String name, String reservationNumber) {
-    	super("Hotel Kiosk");
-   		this.reservationNum = reservationNumber;
+        super("Hotel Kiosk");
+        this.reservationNum = reservationNumber;
         setSize(700, 850);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BorderLayout());
 
         // 각 영역에 패널 추가
-        contentPane.add(new NPanel(), BorderLayout.NORTH);
+        contentPane.add(new NorthPanel(), BorderLayout.NORTH);
         contentPane.add(new CPanel(name, reservationNum), BorderLayout.CENTER);
         contentPane.add(new SPanel(), BorderLayout.SOUTH);
         contentPane.add(new WPanel(), BorderLayout.WEST);
@@ -61,65 +63,72 @@ public class SelfCheckinInfo extends JFrame {
         }
     }
 
-    class NPanel extends JPanel {
-		public NPanel() {
-			setBackground(new Color(74, 69, 66));
-			setLayout(new GridBagLayout());
-			
-			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.fill = GridBagConstraints.HORIZONTAL;
-			gbc.weightx = 1.0;			
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.weighty = 0.1;
-			
-			JLabel emptyLabel = new JLabel();
-			emptyLabel.setOpaque(true);
-			emptyLabel.setBackground(new Color(74, 69, 66));
-			emptyLabel.setPreferredSize(new Dimension(700, 10));
-			add(emptyLabel, gbc);
-			
+    class NorthPanel extends JPanel {
+        public NorthPanel() {
+            setBackground(new Color(74, 69, 66));
+            setLayout(new GridBagLayout()); // GridBagLayout 사용
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.weightx = 1.0; // 가로 방향으로 확대
+
+            // 빈 레이블 추가
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weighty = 0.1; // 빈 레이블의 세로 비율
+            JLabel emptyLabel = new JLabel();
+            emptyLabel.setOpaque(true);
+            emptyLabel.setBackground(new Color(74, 69, 66));
+            emptyLabel.setPreferredSize(new Dimension(700, 40)); // 세로 크기 조절
+            add(emptyLabel, gbc); // 첫 번째 셀에 빈 레이블 추가
+
+            // 로고 패널
             gbc.gridy = 1; // 두 번째 행
             gbc.weighty = 0.0; // 로고 패널의 세로 비율
-            
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(74, 69, 66));
             JLabel logo = new JLabel("");
             ImageIcon icon = new ImageIcon("images/logo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
-            logoPanel.setPreferredSize(new Dimension(700,50));
+            logoPanel.setPreferredSize(new Dimension(700,100));
             add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
+
+            logoPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new HotelKioskMain();
+                    SwingUtilities.getWindowAncestor(NorthPanel.this).setVisible(false);
+                }
+            });
+
+            JLabel leftBar = new JLabel();
+            leftBar.setOpaque(true);
+            leftBar.setBackground(new Color(255, 178, 165));
+            leftBar.setPreferredSize(new Dimension(250, 3));
+
+            JLabel rightBar = new JLabel();
+            rightBar.setOpaque(true);
+            rightBar.setBackground(new Color(255, 178, 165));
+            rightBar.setPreferredSize(new Dimension(250, 3));
 
             // 텍스트 패널
             gbc.gridy = 2; // 세 번째 행
             gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
-            gbc.insets = new Insets(0, 0, 30, 0); // 아래쪽 여백 30px 추가
             JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             textPanel.setBackground(new Color(74, 69, 66));
-            
-            JLabel leftBar = new JLabel();
-            leftBar.setOpaque(true);
-            leftBar.setBackground(new Color(255, 178, 165));
-            leftBar.setPreferredSize(new Dimension(200, 3));
-            
-            JLabel rightBar = new JLabel();
-            rightBar.setOpaque(true);
-            rightBar.setBackground(new Color(255, 178, 165));
-            rightBar.setPreferredSize(new Dimension(200, 3));
-            
-            JLabel textLabel = new JLabel("   셀프 체크인   ");
+            JLabel textLabel = new JLabel("셀프 체크인");
             textLabel.setForeground(Color.WHITE);
-            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18)); // 글꼴 및 크기 설정
-            
+            textLabel.setFont(new Font("Arial", Font.BOLD, 22)); // 글꼴 및 크기 설정
+            textPanel.setPreferredSize(new Dimension(700,70));
+
             textPanel.add(leftBar, BorderLayout.WEST);
             textPanel.add(textLabel, BorderLayout.CENTER);
             textPanel.add(rightBar, BorderLayout.EAST);
-           
-            textPanel.setPreferredSize(new Dimension(700, 90));
-            add(textPanel, gbc);
-		}
-	}
+
+            add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
+        }
+    }
 
     // 서쪽 패널
     class WPanel extends JPanel {
@@ -139,7 +148,7 @@ public class SelfCheckinInfo extends JFrame {
 
     // 중앙 패널: 체크인 정보 표시
     class CPanel extends JPanel {
-       private JCheckBox carCheckBox;
+        private JCheckBox carCheckBox;
         public CPanel(String name, String reservationNum) {
             setPreferredSize(new Dimension(200, 100));
             setBackground(new Color(104, 90, 90));
@@ -256,13 +265,13 @@ public class SelfCheckinInfo extends JFrame {
             confirmButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                	// "예약하신 내역과 일치합니까?" 체크박스 미체크
-                    if (!confirmBox.isSelected()) { 
+                    // "예약하신 내역과 일치합니까?" 체크박스 미체크
+                    if (!confirmBox.isSelected()) {
                         JOptionPane.showMessageDialog(
-                            SelfCheckinInfo.this, 
-                            "예약하신 내역과 일치하는지 확인하세요.", 
-                            "경고", 
-                            JOptionPane.WARNING_MESSAGE
+                                SelfCheckinInfo.this,
+                                "예약하신 내역과 일치하는지 확인하세요.",
+                                "경고",
+                                JOptionPane.WARNING_MESSAGE
                         );
                     } else {
                         SelfCheckinInfo.this.setVisible(false);

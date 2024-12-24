@@ -64,12 +64,12 @@ public class RoomKioskMain extends JFrame {
             JLabel leftBar = new JLabel();
             leftBar.setOpaque(true);
             leftBar.setBackground(Color.WHITE);
-            leftBar.setPreferredSize(new Dimension(200, 3));
+            leftBar.setPreferredSize(new Dimension(220, 3));
 
             JLabel rightBar = new JLabel();
             rightBar.setOpaque(true);
             rightBar.setBackground(Color.WHITE);
-            rightBar.setPreferredSize(new Dimension(200, 3));
+            rightBar.setPreferredSize(new Dimension(220, 3));
 
             JLabel textLabel = new JLabel("   객실 키오스크   ");
             textLabel.setForeground(new Color(95, 70, 70));
@@ -127,19 +127,19 @@ public class RoomKioskMain extends JFrame {
             titleButton.addActionListener(e -> {
                 switch (title) {
                     case "룸 서비스":
-                    	new RoomKioskFood().setVisible(true);
+                        new RoomKioskFood().setVisible(true);
                         SwingUtilities.getWindowAncestor(panel).setVisible(false); // 현재 창 숨기기
                         break;
                     case "온도/조명 조절":
-                    	new RoomKioskTempLight().setVisible(true);
+                        new RoomKioskTempLight().setVisible(true);
                         SwingUtilities.getWindowAncestor(panel).setVisible(false); // 현재 창 숨기기
                         break;
                     case "알람 기능":
-                    	new RoomKioskAlarmList().setVisible(true);
+                        new RoomKioskAlarmList().setVisible(true);
                         SwingUtilities.getWindowAncestor(panel).setVisible(false); // 현재 창 숨기기
                         break;
                     case "조식권 구매":
-                    	new RoomKioskMeal().setVisible(true);
+                        new RoomKioskMeal().setVisible(true);
                         SwingUtilities.getWindowAncestor(panel).setVisible(false); // 현재 창 숨기기
                         break;
                 }

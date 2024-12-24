@@ -6,29 +6,29 @@ import java.util.List;
 
 public class DatabaseConnection {
     // 데이터베이스 연결 정보
-    private static final String URL = "jdbc:mysql://localhost:3306/Hotel";
-    private static final String USER = "root"; 
-    private static final String PASSWORD = "1122";  
+    private static final String URL = "jdbc:mysql://localhost:8080/kiosk_DB";
+    private static final String USER = "root";
+    private static final String PASSWORD = "1122";
 
     public static boolean checkReservation(String name, String reservationNumber) {
         String query = "SELECT * FROM SelfCheckinInfo WHERE name = ? AND reservation_num = ?";
 
         try (Connection con = getConnection();  // getConnection()을 사용해 연결
              PreparedStatement pstmt = con.prepareStatement(query)) {
-            
+
             pstmt.setString(1, name);
             pstmt.setString(2, reservationNumber);
 
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return true; 
+                return true;
             }
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
 
-        return false;  
+        return false;
     }
 
     public static Connection getConnection() throws SQLException {
@@ -37,7 +37,7 @@ public class DatabaseConnection {
 
     public static List<String[]> getReservations() {
         List<String[]> reservations = new ArrayList<>();
-        String query = "SELECT * FROM SelfCheckinInfo";  
+        String query = "SELECT * FROM SelfCheckinInfo";
 
         try (Connection con = getConnection();
              Statement stmt = con.createStatement();
@@ -61,7 +61,7 @@ public class DatabaseConnection {
 
         return reservations;
     }
-    
+
     public static String getRoomNumberByReservationNumber(String reservationNum) {
         String roomNumber = null;
         String query = "SELECT room_number FROM SelfCheckinInfo WHERE reservation_num = ?";
@@ -84,7 +84,7 @@ public class DatabaseConnection {
     }
     public static String getRandomAvailableRoomNumber(String roomType) {
         String query = "SELECT DISTINCT room_number FROM SelfCheckinInfo WHERE room_type = ? " +
-                       "AND room_number NOT IN (SELECT room_number FROM SelfCheckinInfo)";
+                "AND room_number NOT IN (SELECT room_number FROM SelfCheckinInfo)";
 
         List<String> availableRooms = new ArrayList<>();
 
@@ -113,8 +113,8 @@ public class DatabaseConnection {
 
     public static void insertReservation(String name, String reservationNum, String roomType, String phoneNum, String breakfast) {
         String query = "INSERT INTO SelfCheckinInfo (name, reservation_num, room_type, phone_num, breakfast, room_number) " +
-                       "VALUES (?, ?, ?, ?, ?, ?)";
-        
+                "VALUES (?, ?, ?, ?, ?, ?)";
+
         String roomNumber = getRandomAvailableRoomNumber(roomType); // 랜덤 방 번호 가져오기
 
         if (roomNumber == null) {
@@ -151,5 +151,4 @@ public class DatabaseConnection {
         }
     }
 }
-
 

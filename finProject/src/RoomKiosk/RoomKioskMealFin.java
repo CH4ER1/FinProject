@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RoomKioskMealFin extends JFrame {
     public RoomKioskMealFin() {
@@ -55,6 +57,14 @@ public class RoomKioskMealFin extends JFrame {
             logoPanel.setPreferredSize(new Dimension(700, 100));
             add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
 
+            logoPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new RoomKioskMain();
+                    SwingUtilities.getWindowAncestor(NorthPanel.this).setVisible(false);
+                }
+            });
+
             // 텍스트 패널
             gbc.gridy = 2; // 세 번째 행
             gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
@@ -64,12 +74,12 @@ public class RoomKioskMealFin extends JFrame {
             JLabel leftBar = new JLabel();
             leftBar.setOpaque(true);
             leftBar.setBackground(Color.WHITE);
-            leftBar.setPreferredSize(new Dimension(200, 3));
+            leftBar.setPreferredSize(new Dimension(230, 3));
 
             JLabel rightBar = new JLabel();
             rightBar.setOpaque(true);
             rightBar.setBackground(Color.WHITE);
-            rightBar.setPreferredSize(new Dimension(200, 3));
+            rightBar.setPreferredSize(new Dimension(230, 3));
 
             JLabel textLabel = new JLabel("   조식권 구매   ");
             textLabel.setForeground(new Color(95, 70, 70));
@@ -83,8 +93,8 @@ public class RoomKioskMealFin extends JFrame {
             add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
         }
     }
-    
-    
+
+
     class CenterPanel extends JPanel {
         public CenterPanel() {
             setBackground(new Color(255, 236, 236));
@@ -113,7 +123,7 @@ public class RoomKioskMealFin extends JFrame {
             JLabel ticketLabel = new JLabel(scaledIcon);
             gbc.gridy = 1;
             add(ticketLabel, gbc);
-            
+
 
             JLabel completeMessage = new JLabel("구매가 완료되었습니다.");
             completeMessage.setFont(new Font("KoPubDotum Bold", Font.BOLD, 20));
@@ -133,19 +143,19 @@ public class RoomKioskMealFin extends JFrame {
     }
     class WestPanel extends JPanel {
         public WestPanel() {
-           setBackground(new Color(255, 220, 200));
-           add(new JLabel("       "));
-           setPreferredSize(new Dimension(100, 300));
+            setBackground(new Color(255, 220, 200));
+            add(new JLabel("       "));
+            setPreferredSize(new Dimension(100, 300));
         }
-     }
-     
-     class EastPanel extends JPanel {
+    }
+
+    class EastPanel extends JPanel {
         public EastPanel() {
-           setBackground(new Color(255, 220, 200));
-           add(new JLabel("       "));
-           setPreferredSize(new Dimension(100, 300));
+            setBackground(new Color(255, 220, 200));
+            add(new JLabel("       "));
+            setPreferredSize(new Dimension(100, 300));
         }
-     }
+    }
     class SouthPanel extends JPanel {
         private int remainingTime = 10; // 초기 카운트다운 시간
 
@@ -166,23 +176,23 @@ public class RoomKioskMealFin extends JFrame {
 
             add(Box.createVerticalGlue());
 
-	        Timer timer = new Timer(1000, new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	                if (remainingTime > 0) {
-	                    remainingTime--;
-	                    infoLabel.setText(remainingTime + "초 뒤 메인 화면으로 돌아갑니다.");
-	                } else {
-	                    ((Timer) e.getSource()).stop();
-	                    new RoomKioskMain();
-	                    ((JFrame) SwingUtilities.getWindowAncestor(SouthPanel.this)).dispose();
-	                    
-	                }
-	            }
-	        });
-	        timer.start();
+            Timer timer = new Timer(1000, new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (remainingTime > 0) {
+                        remainingTime--;
+                        infoLabel.setText(remainingTime + "초 뒤 메인 화면으로 돌아갑니다.");
+                    } else {
+                        ((Timer) e.getSource()).stop();
+                        new RoomKioskMain();
+                        ((JFrame) SwingUtilities.getWindowAncestor(SouthPanel.this)).dispose();
+
+                    }
+                }
+            });
+            timer.start();
         }
     }
-    
+
     // 모시러 10만큼 깎인 버튼
     class RoundedButtonTen extends JButton {
         public RoundedButtonTen(String label) {
@@ -204,5 +214,5 @@ public class RoomKioskMealFin extends JFrame {
             return new Dimension(100, 40); // 기본 크기 설정
         }
     }
-    
+
 }

@@ -3,6 +3,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.*;
 public class ReservationInfo extends JFrame {
     public ReservationInfo() {
@@ -23,7 +25,7 @@ public class ReservationInfo extends JFrame {
     public static void main(String[] args) {
         new ReservationInfo();
     }
-    
+
     class CenterPanel extends JPanel {
         public CenterPanel() {
             setBackground(new Color(104, 90, 90));
@@ -32,13 +34,13 @@ public class ReservationInfo extends JFrame {
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.insets = new Insets(7, 7, 7, 7); // 여백 설정
             gbc.fill = GridBagConstraints.HORIZONTAL;
-            
+
             JLabel roomLabel = createLabel("선택한 방:");
             roomLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18));
             gbc.gridx = 0;
             gbc.gridy = 0;
             add(roomLabel, gbc);
-            
+
             JLabel roomTypeLabel = createLabel(ReservationInitial.selectedRoomType);
             roomTypeLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18));
             gbc.gridx = 1;
@@ -78,7 +80,7 @@ public class ReservationInfo extends JFrame {
             phoneField.setSize(new Dimension(300, 25));
             gbc.gridx = 1;
             add(phoneField, gbc);
-            
+
             // 조식 여부 레이블
             JLabel breakfastLabel = createLabel("조식 여부:");
             breakfastLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18));
@@ -93,14 +95,14 @@ public class ReservationInfo extends JFrame {
             breakfastCheckBox.setFont(new Font("KoPubDotum Bold", Font.BOLD, 16)); // 글자 크기 조정
             gbc.gridx = 1;
             add(breakfastCheckBox, gbc);
-            
+
             // 인원수
             JLabel reservationNumLabel = createLabel("예약 인원:");
             reservationNumLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18));
             gbc.gridx = 0;
             gbc.gridy = 4;
             add(reservationNumLabel, gbc);
-            
+
             RoundedTextField reservationNumField = new RoundedTextField("   숫자만 적어주세요", 25, 25);
             reservationNumField.setBackground(Color.WHITE);
             reservationNumField.setForeground(Color.GRAY);
@@ -109,8 +111,8 @@ public class ReservationInfo extends JFrame {
             reservationNumField.setSize(new Dimension(100, 25));
             gbc.gridx = 1;
             add(reservationNumField, gbc);
-            
-         // 체크인 날짜 레이블
+
+            // 체크인 날짜 레이블
             JLabel checkInLabel = createLabel("체크인 날짜:");
             gbc.gridx = 0;
             gbc.gridy = 5;
@@ -120,9 +122,7 @@ public class ReservationInfo extends JFrame {
             RoundedTextField checkInField = new RoundedTextField("   체크인 날짜를 입력해 주세요.", 25, 25);
             checkInField.setBackground(Color.WHITE);
             checkInField.setForeground(Color.GRAY);
-            checkInField.setPreferredSize(new Dimension(300, 25));
-            checkInField.setMinimumSize(new Dimension(300, 25));
-            checkInField.setSize(new Dimension(300, 25));
+            checkInField.setPreferredSize(new Dimension(300, 50)); // 크기 조정
             gbc.gridx = 1;
             add(checkInField, gbc);
 
@@ -136,12 +136,10 @@ public class ReservationInfo extends JFrame {
             RoundedTextField checkOutField = new RoundedTextField("   체크아웃 날짜를 입력해 주세요.", 25, 25);
             checkOutField.setBackground(Color.WHITE);
             checkOutField.setForeground(Color.GRAY);
-            checkOutField.setPreferredSize(new Dimension(300, 25));
-            checkOutField.setMinimumSize(new Dimension(300, 25));
-            checkOutField.setSize(new Dimension(300, 25));
+            checkOutField.setPreferredSize(new Dimension(300, 50)); // 크기 조정
             gbc.gridx = 1;
             add(checkOutField, gbc);
-            
+
             JLabel carLabel = createLabel("차량 보유 여부");
             gbc.gridx = 0;
             gbc.gridy = 7;
@@ -171,7 +169,7 @@ public class ReservationInfo extends JFrame {
             paymentButton.setFont(new Font("KoPubDotum Bold", Font.BOLD, 20));
             paymentButton.setBackground(new Color(254, 190, 152)); // 버튼 배경색
             paymentButton.setForeground(Color.DARK_GRAY);
-            
+
             paymentButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -199,7 +197,7 @@ public class ReservationInfo extends JFrame {
                     try (Connection con = DatabaseConnection.getConnection();
                          PreparedStatement pstmt = con.prepareStatement(
                                  "INSERT INTO SelfCheckinInfo (name, reservation_num, room_type, people_num, phone_num, breakfast, room_number) " +
-                                 "VALUES (?, ?, ?, ?, ?, ?, ?)")) {
+                                         "VALUES (?, ?, ?, ?, ?, ?, ?)")) {
 
                         pstmt.setString(1, name);             // 예약자명
                         pstmt.setString(2, reservationNum);  // 예약 번호
@@ -248,65 +246,72 @@ public class ReservationInfo extends JFrame {
     }
 
 
-	class NorthPanel extends JPanel {
-		public NorthPanel() {
-			setBackground(new Color(74, 69, 66));
-			setLayout(new GridBagLayout());
-			
-			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.fill = GridBagConstraints.HORIZONTAL;
-			gbc.weightx = 1.0;			
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.weighty = 0.1;
-			
-			JLabel emptyLabel = new JLabel();
-			emptyLabel.setOpaque(true);
-			emptyLabel.setBackground(new Color(74, 69, 66));
-			emptyLabel.setPreferredSize(new Dimension(700, 10));
-			add(emptyLabel, gbc);
-			
+    class NorthPanel extends JPanel {
+        public NorthPanel() {
+            setBackground(new Color(74, 69, 66));
+            setLayout(new GridBagLayout()); // GridBagLayout 사용
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.weightx = 1.0; // 가로 방향으로 확대
+
+            // 빈 레이블 추가
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weighty = 0.1; // 빈 레이블의 세로 비율
+            JLabel emptyLabel = new JLabel();
+            emptyLabel.setOpaque(true);
+            emptyLabel.setBackground(new Color(74, 69, 66));
+            emptyLabel.setPreferredSize(new Dimension(700, 40)); // 세로 크기 조절
+            add(emptyLabel, gbc); // 첫 번째 셀에 빈 레이블 추가
+
+            // 로고 패널
             gbc.gridy = 1; // 두 번째 행
-            gbc.weighty = 0.0; 
-                                                
+            gbc.weighty = 0.0; // 로고 패널의 세로 비율
             JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             logoPanel.setBackground(new Color(74, 69, 66));
             JLabel logo = new JLabel("");
             ImageIcon icon = new ImageIcon("images/logo.png");
             logo.setIcon(icon);
             logoPanel.add(logo);
-            logoPanel.setPreferredSize(new Dimension(700,50));
-            add(logoPanel, gbc); 
+            logoPanel.setPreferredSize(new Dimension(700,100));
+            add(logoPanel, gbc); // 두 번째 셀에 로고 패널 추가
 
-            gbc.gridy = 2; 
-            gbc.weighty = 0.0; 
-            gbc.insets = new Insets(0, 0, 30, 0); 
-            JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-            textPanel.setBackground(new Color(74, 69, 66));
-            
+            logoPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    new HotelKioskMain();
+                    SwingUtilities.getWindowAncestor(NorthPanel.this).setVisible(false);
+                }
+            });
+
             JLabel leftBar = new JLabel();
             leftBar.setOpaque(true);
             leftBar.setBackground(new Color(255, 178, 165));
-            leftBar.setPreferredSize(new Dimension(250, 3));
-            
+            leftBar.setPreferredSize(new Dimension(270, 3));
+
             JLabel rightBar = new JLabel();
             rightBar.setOpaque(true);
             rightBar.setBackground(new Color(255, 178, 165));
-            rightBar.setPreferredSize(new Dimension(250, 3));
-            
-            JLabel textLabel = new JLabel("   현장 예약   ");
+            rightBar.setPreferredSize(new Dimension(270, 3));
+
+            // 텍스트 패널
+            gbc.gridy = 2; // 세 번째 행
+            gbc.weighty = 0.0; // 텍스트 패널의 세로 비율
+            JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            textPanel.setBackground(new Color(74, 69, 66));
+            JLabel textLabel = new JLabel("현장 예약");
             textLabel.setForeground(Color.WHITE);
-            textLabel.setFont(new Font("KoPubDotum Bold", Font.BOLD, 18)); 
-            
+            textLabel.setFont(new Font("Arial", Font.BOLD, 22)); // 글꼴 및 크기 설정
+            textPanel.setPreferredSize(new Dimension(700,70));
+
             textPanel.add(leftBar, BorderLayout.WEST);
             textPanel.add(textLabel, BorderLayout.CENTER);
             textPanel.add(rightBar, BorderLayout.EAST);
-           
-            textPanel.setPreferredSize(new Dimension(700, 90));
-            add(textPanel, gbc);
-			
-		}
-	}
+
+            add(textPanel, gbc); // 세 번째 셀에 텍스트 패널 추가
+        }
+    }
 
     class RoundedTextField extends JTextField {
         private int arcWidth;
@@ -357,7 +362,7 @@ public class ReservationInfo extends JFrame {
         }
     }
 
- 
+
 
     class SouthPanel extends JPanel {
         public SouthPanel() {
